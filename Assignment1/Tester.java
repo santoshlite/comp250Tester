@@ -410,6 +410,17 @@ class BasketTest {      // 7 points
     }
 
     @Test
+    @Tag("score:1") @DisplayName("Basket add() Test2")
+    void addTest2() {
+        Basket basket = new Basket();
+        int number = 0;
+        for(int i = 0; i < 30; i++){
+            number = basket.add(new HotelReservation("Marty", new Hotel("Gatewater", new Room[]{new Room("queen")}), "queen", 4));
+        }
+        assertEquals(30, number, "Basket: add() returns the wrong number of reservations now in the basket when adding many items.");
+    }
+
+    @Test
     @Tag("score:2") @DisplayName("Basket getProducts() Test1")
     void getProducts2() {
         Basket basket = new Basket();

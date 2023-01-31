@@ -30,7 +30,7 @@ class AirportTest { // 2 points
                 "Airport: getDistance() did not return the correct distance");
     }
 
-    //Test if the method rounds up properly
+    //Check if the method rounds up properly
     @Test
     @Tag("score:1") @DisplayName("Airport getDistance() Test2")
     void getDistance_Test2() {
@@ -235,7 +235,7 @@ class HotelTest {       // 7 points
                 "Hotel: cancelRoom() did not return the correct value");
     }
 
-    //Check if the methods returns false if the selected room is in the array but is unavailable
+    //Check if the method returns false if the selected room is in the array but is unavailable
     @Test
     @Tag ("score:1") @DisplayName("Hotel cancelRoom() Test3")
     void cancelRoom_Test3() {

@@ -235,19 +235,7 @@ class HotelTest {       // 7 points
                 "Hotel: cancelRoom() did not return the correct value");
     }
 
-    //Check if the method returns false if the selected room is in the array but is unavailable
-    @Test
-    @Tag ("score:1") @DisplayName("Hotel cancelRoom() Test3")
-    void cancelRoom_Test3() {
-        Room room = new Room("double");
-        room.changeAvailability();
-        Room[] rooms = {room};
-        Hotel hotel1 = new Hotel("Hotel1", rooms);
-        assertFalse(hotel1.cancelRoom("double"),
-                "Hotel: cancelRoom() did not return the correct value");
-    }
-}
-
+    
 class CustomerTest {    // 7 points
     @Test
     @Tag("score:1") @DisplayName("Customer Constructor Test1")

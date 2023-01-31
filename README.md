@@ -1,4 +1,4 @@
-# COMP 250 Testers
+# COMP 250 Testers [9 extra testers added!]
 
 This is a repository for COMP 250 testers!
 

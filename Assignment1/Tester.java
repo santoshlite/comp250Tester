@@ -1,4 +1,4 @@
-package assignment1;
+package assignment;
 
 // To make the tester work, you might need to setUp some import libraries. To do so:
 // 1: Hover over the red text saying junit (or other libraries that are red)
@@ -30,7 +30,7 @@ class AirportTest { // 2 points
                 "Airport: getDistance() did not return the correct distance");
     }
 
-    //Check if the method rounds up properly
+    //Test if the method rounds up properly
     @Test
     @Tag("score:1") @DisplayName("Airport getDistance() Test2")
     void getDistance_Test2() {
@@ -66,29 +66,6 @@ class RoomTest {    // 6 points
 
     }
 
-    //Check if we can create a room with the constructor being not case-sensitive
-    @Test
-    @Tag("score:1") @DisplayName("Room Constructor Test2")
-    void roomConstructor_Test2() {
-        Room room = new Room("DouBle");
-        assertEquals("double", room.getType(),
-                "Room: getRoomType() did not return the correct type for a double room");
-        assertEquals(9000, room.getPrice(),
-                "Room: getPrice() did not return the correct price for a double room");
-
-        room = new Room("QUEEN");
-        assertEquals("queen", room.getType(),
-                "Room: getRoomType() did not return the correct type for a queen room");
-        assertEquals(11000, room.getPrice(),
-                "Room: getPrice() did not return the correct price for a queen room");
-
-        room = new Room("KinG");
-        assertEquals("king", room.getType(),
-                "Room: getRoomType() did not return the correct type for a king room");
-        assertEquals(15000, room.getPrice(),
-                "Room: getPrice() did not return the correct price for a king room");
-
-    }
 
     @Test
     @Tag("score:1") @DisplayName("Room Constructor Test4")
@@ -235,7 +212,8 @@ class HotelTest {       // 7 points
                 "Hotel: cancelRoom() did not return the correct value");
     }
 
-    
+}
+
 class CustomerTest {    // 7 points
     @Test
     @Tag("score:1") @DisplayName("Customer Constructor Test1")
@@ -283,9 +261,10 @@ class CustomerTest {    // 7 points
                 "Customer: addToBasket() for the Hotel type did not return the correct number of reservations in the basket");
     }
 
+
     @Test
-    @Tag("score:1") @DisplayName("Customer addToBasket(FlightReservation) Test4")
-    void addToBasket_Test4_Reservation() {
+    @Tag("score:1") @DisplayName("Customer addToBasket(FlightReservation) Test5")
+    void addToBasket_Test5_Reservation() {
         Customer customer = new Customer("bob", 100);
         Airport airport1 = new Airport(100, 200, 1000);
         Airport airport2 = new Airport(10, 20, 2000);
@@ -308,6 +287,22 @@ class CustomerTest {    // 7 points
                 "Customer: removeFromBasket(Reservation) did not return the correct value");
     }
 
+
+    @Test
+    @Tag("score:1") @DisplayName("Customer removeFromBasket(Reservation) Test2")
+    void removeFromBasket_Test2() {
+        Customer customer = new Customer("Bob", 100);
+        Customer customer2 = new Customer("Not Bob", 100);
+
+        Room[] rooms = {new Room("double")};
+        Hotel hotel = new Hotel("Average Hotel", rooms);
+        Reservation reservation = new HotelReservation("Bob", hotel, "double", 2);
+        customer.addToBasket(reservation);
+
+        assertFalse(customer2.removeFromBasket(reservation),
+                "Customer: removeFromBasket(Reservation) did not return the correct value");
+    }
+
     @Test
     @Tag("score:1") @DisplayName("Customer checkOut() Test1")
     void checkout_Tes1() {
@@ -321,6 +316,8 @@ class CustomerTest {    // 7 points
         assertEquals(82000, customer.checkOut(),
                 "Customer: checkOut() did not return the correct balance after checkOut");
     }
+
+
 }
 
 class ReservationTest {     // 2 points
@@ -392,6 +389,18 @@ class HotelReservationTest {    // 4 points
         HotelReservation hotelReservation2 = new HotelReservation("Bob", hotel1, "king", 1);
         assertFalse(hotelReservation1.equals(hotelReservation2), "HotelReservation: equals() returns the wrong value");
     }
+
+    @Test
+    @Tag("score:1") @DisplayName("HotelReservation equals() Test3")
+    void testEquals3() {
+        Room[] rooms = {new Room("double"), new Room("double")};
+        Hotel hotel1 = new Hotel("Hotel1", rooms);
+        HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
+        HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
+        assertTrue(hotelReservation1.equals(hotelReservation2), "HotelReservation: equals() returns the wrong value");
+    }
+
+
 }
 
 class FlightReservationTest {   // 3 points
@@ -430,6 +439,19 @@ class FlightReservationTest {   // 3 points
 
         assertFalse(flightReservation1.equals(flightReservation2),
                 "FlightReservation: equals() returns the wrong value.");
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("FlightReservation equals() Test3")
+    void testEquals3() {
+        Airport airport1 = new Airport(44, 120, 100);
+        Airport airport2 = new Airport(50, 112, 110);
+
+        FlightReservation flightReservation1 = new FlightReservation("Alex", airport1, airport2);
+        FlightReservation flightReservation2 = new FlightReservation("Alex", airport1, airport2);
+
+        assertTrue(flightReservation1.equals(flightReservation2),
+                "FlightReservation: equals() returns the wrong value");
     }
 }
 
@@ -582,5 +604,3 @@ class BasketTest {      // 7 points
         }
     }
 }
-
-

@@ -41,7 +41,8 @@
 | #4 | Customer addToBasket(HotelReservation) Test3 | 
 | #5 | Customer addToBasket(FlightReservation) Test4 | 
 | #6 | Customer removeFromBasket(Reservation) Test1 | 
-| #7 | Customer checkOut() Test1 | 
+| #7 | Customer removeFromBasket(Reservation) Test2 | 
+| #8 | Customer checkOut() Test1 | 
 
 ## ReservationTest()
 
@@ -57,6 +58,7 @@
 | #2 | HotelReservation getCost() Test1 | 
 | #3 | HotelReservation equals() Test1 | 
 | #4 | HotelReservation equals() Test2 | 
+| #5 | HotelReservation equals() Test3 | 
 
 ## FlightReservationTest()
 
@@ -65,6 +67,7 @@
 | #1 | FlightReservation getCost() Test1 |
 | #2 | FlightReservation equals() Test1 | 
 | #3 | FlightReservation equals() Test2 | 
+| #4 | FlightReservation equals() Test3 | 
 
 ## BnBReservationTest()
 

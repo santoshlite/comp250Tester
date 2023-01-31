@@ -4,17 +4,21 @@
 | :---: | :---: |
 | #1 | Airport getFees() Test1 | 
 | #2 | Airport getDistance() Test1 | 
+| #3 | Airport getDistance() Test2 |
 
 ## RoomTest()
 
 | Index | Name | 
 | :---: | :---: |
 | #1 | Room Constructor Test1 |
-| #2 | Room Constructor Test4 | 
-| #3 | Room Copy Constructor Test1 |
-| #4 | Room findAvailableRoom() Test1 | 
-| #5 | Room makeRoomAvailable() Test1 | 
-| #6 | Room changeAvailability Test1| 
+| #2 | Room Constructor Test2 |
+| #3 | Room Constructor Test4 | 
+| #4 | Room Copy Constructor Test1 |
+| #5 | Room findAvailableRoom() Test1 | 
+| #6 | Room makeRoomAvailable() Test1 | 
+| #7 | Room makeRoomAvailable() Test2 | 
+| #8 | Room changeAvailability Test1| 
+| #9 | Room changeAvailability Test2| 
 
 
 ## HotelTest()

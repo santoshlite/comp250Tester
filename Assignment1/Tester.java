@@ -66,6 +66,30 @@ class RoomTest {    // 6 points
 
     }
 
+    //Check if we can create a room with the constructor being not case-sensitive
+    @Test
+    @Tag("score:1") @DisplayName("Room Constructor Test2")
+    void roomConstructor_Test2() {
+        Room room = new Room("DouBle");
+        assertEquals("double", room.getType(),
+                "Room: getRoomType() did not return the correct type for a double room");
+        assertEquals(9000, room.getPrice(),
+                "Room: getPrice() did not return the correct price for a double room");
+
+        room = new Room("QUEEN");
+        assertEquals("queen", room.getType(),
+                "Room: getRoomType() did not return the correct type for a queen room");
+        assertEquals(11000, room.getPrice(),
+                "Room: getPrice() did not return the correct price for a queen room");
+
+        room = new Room("KinG");
+        assertEquals("king", room.getType(),
+                "Room: getRoomType() did not return the correct type for a king room");
+        assertEquals(15000, room.getPrice(),
+                "Room: getPrice() did not return the correct price for a king room");
+
+    }
+
     @Test
     @Tag("score:1") @DisplayName("Room Constructor Test4")
     void roomConstructor_Test4() {

@@ -29,6 +29,16 @@ class AirportTest { // 2 points
         assertEquals(10, Airport.getDistance(a, b),
                 "Airport: getDistance() did not return the correct distance");
     }
+
+    //Check if the method rounds up properly
+    @Test
+    @Tag("score:1") @DisplayName("Airport getDistance() Test2")
+    void getDistance_Test2() {
+        Airport a = new Airport(44, 120, 100);
+        Airport b = new Airport(55, 113, 100);
+        assertEquals(14, Airport.getDistance(a, b), //Exact value 13.04 should be rounded up to 14
+                "Airport: getDistance() did not return the correct distance");
+    }
 }
 
 class RoomTest {    // 6 points
@@ -49,6 +59,30 @@ class RoomTest {    // 6 points
                 "Room: getPrice() did not return the correct price for a queen room");
 
         room = new Room("king");
+        assertEquals("king", room.getType(),
+                "Room: getRoomType() did not return the correct type for a king room");
+        assertEquals(15000, room.getPrice(),
+                "Room: getPrice() did not return the correct price for a king room");
+
+    }
+
+    //Check if we can create a room with the constructor being not case-sensitive
+    @Test
+    @Tag("score:1") @DisplayName("Room Constructor Test2")
+    void roomConstructor_Test2() {
+        Room room = new Room("DouBle");
+        assertEquals("double", room.getType(),
+                "Room: getRoomType() did not return the correct type for a double room");
+        assertEquals(9000, room.getPrice(),
+                "Room: getPrice() did not return the correct price for a double room");
+
+        room = new Room("QUEEN");
+        assertEquals("queen", room.getType(),
+                "Room: getRoomType() did not return the correct type for a queen room");
+        assertEquals(11000, room.getPrice(),
+                "Room: getPrice() did not return the correct price for a queen room");
+
+        room = new Room("KinG");
         assertEquals("king", room.getType(),
                 "Room: getRoomType() did not return the correct type for a king room");
         assertEquals(15000, room.getPrice(),
@@ -87,10 +121,28 @@ class RoomTest {    // 6 points
                 "Room: findAvailableRoom() did not return the correct room");
     }
 
+    //Check if the method returns null when no room is found
+    @Test
+    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test2")
+    void findAvailableRoom_Test2() {
+        Room[] rooms = {new Room("king"), new Room("king"), new Room("double")};
+        assertNull(Room.findAvailableRoom(rooms, "queen"),
+                "Room: findAvailableRoom() did not return the correct room");
+    }
+
     @Test
     @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test1")
     void makeRoomAvailable_Test1() {
         Room[] rooms = {new Room("double"), new Room("king"), new Room("queen")};
+        assertFalse(Room.makeRoomAvailable(rooms, "king"),
+                "Room: makeRoomAvailable() did not return the correct value"  );
+    }
+
+    //Check if the method returns false if the input room is not in the list
+    @Test
+    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test2")
+    void makeRoomAvailable_Test2() {
+        Room[] rooms = {new Room("double"), new Room("queen"), new Room("queen")};
         assertFalse(Room.makeRoomAvailable(rooms, "king"),
                 "Room: makeRoomAvailable() did not return the correct value"  );
     }
@@ -105,6 +157,19 @@ class RoomTest {    // 6 points
                 "Room: changeAvailability() did not change the availability of the room");
 
     }
+
+    @Test
+    //Check if the method returns false if all rooms are already available
+    @Tag("score:1") @DisplayName("Room changeAvailability Test2")
+    void changeAvailability_Test2() {
+        Room room1 = new Room("double");
+        Room room2 = new Room("double");
+        Room[] rooms = {room1,room2};
+        assertFalse(Room.makeRoomAvailable(rooms, "double"),
+                "Room: changeAvailability() did not return false");
+
+    }
+
 }
 
 class HotelTest {       // 7 points
@@ -169,8 +234,8 @@ class HotelTest {       // 7 points
         assertFalse(hotel1.cancelRoom("king"),
                 "Hotel: cancelRoom() did not return the correct value");
     }
-}
 
+    
 class CustomerTest {    // 7 points
     @Test
     @Tag("score:1") @DisplayName("Customer Constructor Test1")

@@ -1,4 +1,4 @@
-package assignment;
+package assignment1;
 
 // To make the tester work, you might need to setUp some import libraries. To do so:
 // 1: Hover over the red text saying junit (or other libraries that are red)

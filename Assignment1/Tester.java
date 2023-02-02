@@ -203,6 +203,18 @@ class RoomTest {    // 6 points
     }
 
     @Test
+    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test7")
+    void makeRoomAvailable_Test7() {
+
+        Room aDouble = new Room("double");
+        Room aKing = new Room("king");
+        aKing.changeAvailability(); // Making the aKing room not available/false
+        Room[] rooms = {aDouble, null, aKing}; // Should go through room null without return false
+        assertTrue(Room.makeRoomAvailable(rooms, "king"),
+                "Room: makeRoomAvailable() did not return the correct value"  );
+    }
+
+    @Test
     @Tag("score:1") @DisplayName("Room changeAvailability Test1")
     void changeAvailability_Test1() {
         Room room = new Room("double");

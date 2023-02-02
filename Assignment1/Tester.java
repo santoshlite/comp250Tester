@@ -107,6 +107,39 @@ class RoomTest {    // 6 points
                 "Room: findAvailableRoom() did not return the correct room");
     }
 
+
+    @Test
+    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test3")
+    void findAvailableRoom_Test3() {
+        Room[] rooms = {new Room("king"), new Room("queen"), new Room("double"),new Room("queen")};
+        assertEquals(rooms[1], Room.findAvailableRoom(rooms, "queen"),
+                "Room: findAvailableRoom() did not return the correct room");
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test4")
+    void findAvailableRoom_Test4() {
+        Room[] rooms = {};
+        assertNull(Room.findAvailableRoom(rooms, "queen"),
+                "Room: findAvailableRoom() did not return the correct room");
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test5")
+    void findAvailableRoom_Test5() {
+        Room[] rooms = {new Room("king"), new Room("queen"), new Room("double"),new Room("queen")};
+        assertNull(Room.findAvailableRoom(null, "queen"),
+                "Room: findAvailableRoom() did not return the correct room");
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test6")
+    void findAvailableRoom_Test6() {
+        Room[] rooms = {new Room("king"), new Room("queen"), new Room("double"),new Room("queen")};
+        assertNull(Room.findAvailableRoom(rooms, null),
+                "Room: findAvailableRoom() did not return the correct room");
+    }
+
     @Test
     @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test1")
     void makeRoomAvailable_Test1() {
@@ -121,6 +154,41 @@ class RoomTest {    // 6 points
     void makeRoomAvailable_Test2() {
         Room[] rooms = {new Room("double"), new Room("queen"), new Room("queen")};
         assertFalse(Room.makeRoomAvailable(rooms, "king"),
+                "Room: makeRoomAvailable() did not return the correct value"  );
+    }
+
+
+    @Test
+    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test3")
+    void makeRoomAvailable_Test3() {
+        Room doubleRoom = new Room("double");
+        Room[] rooms = {doubleRoom, new Room("queen"), new Room("queen")};
+        doubleRoom.changeAvailability();
+        assertTrue(Room.makeRoomAvailable(rooms, "double"),
+                "Room: makeRoomAvailable() did not return the correct value"  );
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test4")
+    void makeRoomAvailable_Test4() {
+        Room[] rooms = {};
+        assertFalse(Room.makeRoomAvailable(null, "double"),
+                "Room: makeRoomAvailable() did not return the correct value"  );
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test5")
+    void makeRoomAvailable_Test5() {
+        Room[] rooms = {};
+        assertFalse(Room.makeRoomAvailable(rooms, null),
+                "Room: makeRoomAvailable() did not return the correct value"  );
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test6")
+    void makeRoomAvailable_Test6() {
+        Room[] rooms = {};
+        assertFalse(Room.makeRoomAvailable(rooms, "double"),
                 "Room: makeRoomAvailable() did not return the correct value"  );
     }
 
@@ -209,6 +277,26 @@ class HotelTest {       // 7 points
         Room[] rooms = {new Room("double")};
         Hotel hotel1 = new Hotel("Hotel1", rooms);
         assertFalse(hotel1.cancelRoom("king"),
+                "Hotel: cancelRoom() did not return the correct value");
+    }
+
+    // empty room listing
+    @Test
+    @Tag ("score:1") @DisplayName("Hotel cancelRoom() Test3")
+    void cancelRoom_Test3() {
+        Room[] rooms = {};
+        Hotel hotel1 = new Hotel("Hotel1", rooms);
+        assertFalse(hotel1.cancelRoom("king"),
+                "Hotel: cancelRoom() did not return the correct value");
+    }
+
+    // input null value for type of room
+    @Test
+    @Tag ("score:1") @DisplayName("Hotel cancelRoom() Test4")
+    void cancelRoom_Test4() {
+        Room[] rooms = {};
+        Hotel hotel1 = new Hotel("Hotel1", rooms);
+        assertFalse(hotel1.cancelRoom(null),
                 "Hotel: cancelRoom() did not return the correct value");
     }
 
@@ -303,6 +391,23 @@ class CustomerTest {    // 7 points
                 "Customer: removeFromBasket(Reservation) did not return the correct value");
     }
 
+
+    // check if it works when we remove null
+    @Test
+    @Tag("score:1") @DisplayName("Customer removeFromBasket(Reservation) Test3")
+    void removeFromBasket_Test3() {
+        Customer customer = new Customer("Bob", 100);
+
+        Room[] rooms = {};
+        Hotel hotel = new Hotel("Average Hotel", rooms);
+
+        Airport a1 = new Airport(44, 120, 100);
+        Airport a2 = new Airport(45, 120, 100);
+
+        assertFalse(customer.removeFromBasket(null),
+                "Customer: removeFromBasket(Reservation) did not return the correct value");
+    }
+
     @Test
     @Tag("score:1") @DisplayName("Customer checkOut() Test1")
     void checkout_Tes1() {
@@ -390,6 +495,7 @@ class HotelReservationTest {    // 4 points
         assertFalse(hotelReservation1.equals(hotelReservation2), "HotelReservation: equals() returns the wrong value");
     }
 
+
     @Test
     @Tag("score:1") @DisplayName("HotelReservation equals() Test3")
     void testEquals3() {
@@ -398,6 +504,17 @@ class HotelReservationTest {    // 4 points
         HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
         HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
         assertTrue(hotelReservation1.equals(hotelReservation2), "HotelReservation: equals() returns the wrong value");
+    }
+
+    // check equality with null
+    @Test
+    @Tag("score:1") @DisplayName("HotelReservation equals() Test4")
+    void testEquals4() {
+        Room[] rooms = {new Room("double"), new Room("double")};
+        Hotel hotel1 = new Hotel("Hotel1", rooms);
+        HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
+        HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
+        assertFalse(hotelReservation1.equals(null), "HotelReservation: equals() returns the wrong value");
     }
 
 
@@ -451,6 +568,20 @@ class FlightReservationTest {   // 3 points
         FlightReservation flightReservation2 = new FlightReservation("Alex", airport1, airport2);
 
         assertTrue(flightReservation1.equals(flightReservation2),
+                "FlightReservation: equals() returns the wrong value");
+    }
+
+    // check equals(null)
+    @Test
+    @Tag("score:1") @DisplayName("FlightReservation equals() Test4")
+    void testEquals4() {
+        Airport airport1 = new Airport(44, 120, 100);
+        Airport airport2 = new Airport(50, 112, 110);
+
+        FlightReservation flightReservation1 = new FlightReservation("Alex", airport1, airport2);
+        FlightReservation flightReservation2 = new FlightReservation("Alex", airport1, airport2);
+
+        assertFalse(flightReservation1.equals(null),
                 "FlightReservation: equals() returns the wrong value");
     }
 }

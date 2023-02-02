@@ -141,6 +141,14 @@ class RoomTest {    // 6 points
     }
 
     @Test
+    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test7")
+    void findAvailableRoom_Test7() {
+        Room[] rooms = {new Room("king"), null, new Room("queen"), new Room("double"),new Room("queen")};
+        assertEquals(rooms[2], Room.findAvailableRoom(rooms, "queen"),
+                "Room: findAvailableRoom() did not return the correct room");
+    }
+
+    @Test
     @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test1")
     void makeRoomAvailable_Test1() {
         Room[] rooms = {new Room("double"), new Room("king"), new Room("queen")};
@@ -187,7 +195,9 @@ class RoomTest {    // 6 points
     @Test
     @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test6")
     void makeRoomAvailable_Test6() {
-        Room[] rooms = {};
+
+        Room king = new Room("double");
+        Room[] rooms = {king, null};
         assertFalse(Room.makeRoomAvailable(rooms, "double"),
                 "Room: makeRoomAvailable() did not return the correct value"  );
     }

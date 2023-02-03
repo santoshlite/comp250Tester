@@ -2,8 +2,6 @@
 
 This is a repository for COMP 250 testers!
 
-Note: *4 tests have been removed as these cases will not be evaluated*
-
 ## Errors at code execution
 
 If you encounter any errors while running the code, create a new Issue:[ click here to create a new issue](https://github.com/ssantoshp/Empyrial/issues/new/choose). One of the contributors will try to help you!

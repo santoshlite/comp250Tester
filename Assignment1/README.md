@@ -38,11 +38,12 @@
 | #1 | Customer Constructor Test1 |
 | #2 | Customer addFunds() Test1 | 
 | #3 | Customer addToBasket(Reservation) Test1 | 
-| #4 | Customer addToBasket(HotelReservation) Test3 | 
-| #5 | Customer addToBasket(FlightReservation) Test4 | 
-| #6 | Customer removeFromBasket(Reservation) Test1 | 
-| #7 | Customer removeFromBasket(Reservation) Test2 | 
-| #8 | Customer checkOut() Test1 | 
+| #4 | Customer addToBasket(HotelReservation) Test2 | 
+| #5 | Customer addToBasket(With Breakfast) Test3 |
+| #6 | Customer addToBasket(Without Breakfast) Test4 | 
+| #7 | Customer removeFromBasket(Reservation) Test1 | 
+| #8 | Customer removeFromBasket(Reservation) Test2 | 
+| #9 | Customer checkOut() Test1 | 
 
 ## ReservationTest()
 

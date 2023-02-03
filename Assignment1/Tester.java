@@ -48,19 +48,19 @@ class RoomTest {    // 6 points
     void roomConstructor_Test1() {
         Room room = new Room("double");
         assertEquals("double", room.getType(),
-                "Room: getRoomType() did not return the correct type for a double room");
+                "Room: getType() did not return the correct type for a double room");
         assertEquals(9000, room.getPrice(),
                 "Room: getPrice() did not return the correct price for a double room");
 
         room = new Room("queen");
         assertEquals("queen", room.getType(),
-                "Room: getRoomType() did not return the correct type for a queen room");
+                "Room: getType() did not return the correct type for a queen room");
         assertEquals(11000, room.getPrice(),
                 "Room: getPrice() did not return the correct price for a queen room");
 
         room = new Room("king");
         assertEquals("king", room.getType(),
-                "Room: getRoomType() did not return the correct type for a king room");
+                "Room: getType() did not return the correct type for a king room");
         assertEquals(15000, room.getPrice(),
                 "Room: getPrice() did not return the correct price for a king room");
 
@@ -84,7 +84,7 @@ class RoomTest {    // 6 points
                 "Room: copy constructor did not create a new object");
 
         assertEquals("double", copyRoom.getType(),
-                "Room: getRoomType() did not return the correct type for its copy");
+                "Room: getType() did not return the correct type for its copy");
 
         assertEquals(9000, copyRoom.getPrice(),
                 "Room: getPrice() did not return the correct price for its copy");

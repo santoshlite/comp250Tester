@@ -1,6 +1,8 @@
-# COMP 250 Testers [23 extra tests added!]
+# COMP 250 Testers [19 extra tests added!]
 
 This is a repository for COMP 250 testers!
+
+Note: *4 tests have been removed as these cases will not be evaluated*
 
 ## Errors at code execution
 

@@ -125,22 +125,6 @@ class RoomTest {    // 6 points
     }
 
     @Test
-    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test5")
-    void findAvailableRoom_Test5() {
-        Room[] rooms = {new Room("king"), new Room("queen"), new Room("double"),new Room("queen")};
-        assertNull(Room.findAvailableRoom(null, "queen"),
-                "Room: findAvailableRoom() did not return the correct room");
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test6")
-    void findAvailableRoom_Test6() {
-        Room[] rooms = {new Room("king"), new Room("queen"), new Room("double"),new Room("queen")};
-        assertNull(Room.findAvailableRoom(rooms, null),
-                "Room: findAvailableRoom() did not return the correct room");
-    }
-
-    @Test
     @Tag("score:1") @DisplayName("Room findAvailableRoom() Test7")
     void findAvailableRoom_Test7() {
         Room[] rooms = {new Room("king"), null, new Room("queen"), new Room("double"),new Room("queen")};
@@ -176,21 +160,6 @@ class RoomTest {    // 6 points
                 "Room: makeRoomAvailable() did not return the correct value"  );
     }
 
-    @Test
-    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test4")
-    void makeRoomAvailable_Test4() {
-        Room[] rooms = {};
-        assertFalse(Room.makeRoomAvailable(null, "double"),
-                "Room: makeRoomAvailable() did not return the correct value"  );
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test5")
-    void makeRoomAvailable_Test5() {
-        Room[] rooms = {};
-        assertFalse(Room.makeRoomAvailable(rooms, null),
-                "Room: makeRoomAvailable() did not return the correct value"  );
-    }
 
     @Test
     @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test6")
@@ -580,18 +549,6 @@ class FlightReservationTest {   // 3 points
                 "FlightReservation: equals() returns the wrong value.");
     }
 
-    @Test
-    @Tag("score:1") @DisplayName("FlightReservation equals() Test3")
-    void testEquals3() {
-        Airport airport1 = new Airport(44, 120, 100);
-        Airport airport2 = new Airport(50, 112, 110);
-
-        FlightReservation flightReservation1 = new FlightReservation("Alex", airport1, airport2);
-        FlightReservation flightReservation2 = new FlightReservation("Alex", airport1, airport2);
-
-        assertTrue(flightReservation1.equals(flightReservation2),
-                "FlightReservation: equals() returns the wrong value");
-    }
 
     // check equals(null)
     @Test

@@ -330,13 +330,41 @@ class CustomerTest {    // 7 points
 
 
     @Test
-    @Tag("score:1") @DisplayName("Customer addToBasket(HotelReservation) Test3")
-    void addToBasket_Test3_Reservation() {
+    @Tag("score:1") @DisplayName("Customer addToBasket(HotelReservation) Test2")
+    void addToBasket_Test2_Reservation() {
         Customer customer = new Customer("bob", 100);
         Room[] rooms = {new Room("double")};
         Hotel hotel = new Hotel("barcelo", rooms);
 
         assertEquals(1, customer.addToBasket(hotel, "double", 2, false),
+                "Customer: addToBasket() for the Hotel type did not return the correct number of reservations in the basket");
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Customer addToBasket(Without Breakfast) Test3")
+    void addToBasket_Test3_Reservation() {
+        Customer customer = new Customer("Killua", 100);
+        Room[] rooms = {new Room("double")};
+        Hotel hotel = new Hotel("Greed Island", rooms);
+        customer.addToBasket(hotel, "double", 2, false);
+
+        int totalPrice = customer.getBasket().getTotalCost();
+
+        assertEquals(18000, totalPrice,
+                "Customer: addToBasket() for the Hotel type did not return the correct number of reservations in the basket");
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Customer addToBasket(With Breakfast) Test4")
+    void addToBasket_Test4_Reservation() {
+        Customer customer = new Customer("Killua", 100);
+        Room[] rooms = {new Room("double")};
+        Hotel hotel = new Hotel("Greed Island", rooms);
+        customer.addToBasket(hotel, "double", 2, true);
+
+        int totalPrice = customer.getBasket().getTotalCost();
+
+        assertEquals(20000, totalPrice,
                 "Customer: addToBasket() for the Hotel type did not return the correct number of reservations in the basket");
     }
 

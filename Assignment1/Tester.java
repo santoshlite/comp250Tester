@@ -536,6 +536,21 @@ class HotelReservationTest {    // 4 points
         assertFalse(hotelReservation1.equals(null), "HotelReservation: equals() returns the wrong value");
     }
 
+    // check equality with another reservation
+    @Test
+    @Tag("score:1") @DisplayName("HotelReservation equals() Test5")
+    void testEquals5() {
+        Room[] rooms = {new Room("double"), new Room("double")};
+        Hotel hotel1 = new Hotel("Hotel1", rooms);
+        HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
+        HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
+
+        Airport airport1 = new Airport(44, 120, 100);
+        Airport airport2 = new Airport(50, 112, 110);
+        FlightReservation flightReservation1 = new FlightReservation("Alex", airport1, airport2);
+
+        assertFalse(hotelReservation1.equals(flightReservation1), "HotelReservation: equals() returns the wrong value");
+    }
 
 }
 
@@ -591,6 +606,22 @@ class FlightReservationTest {   // 3 points
         assertFalse(flightReservation1.equals(null),
                 "FlightReservation: equals() returns the wrong value");
     }
+
+    // check equality with another reservation
+    @Test
+    @Tag("score:1") @DisplayName("FlightReservation equals() Test5")
+    void testEquals5() {
+        Room[] rooms = {new Room("double"), new Room("double")};
+        Hotel hotel1 = new Hotel("Hotel1", rooms);
+        HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
+        HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
+
+        Airport airport1 = new Airport(44, 120, 100);
+        Airport airport2 = new Airport(50, 112, 110);
+        FlightReservation flightReservation1 = new FlightReservation("Alex", airport1, airport2);
+
+        assertFalse(flightReservation1.equals(hotelReservation1), "HotelReservation: equals() returns the wrong value");
+    }
 }
 
 class BnBReservationTest {      // 2 points
@@ -615,8 +646,19 @@ class BnBReservationTest {      // 2 points
         assertEquals(20000, bnBReservation.getCost(),
                 "BnBReservation: getCost() returns the wrong value.");
     }
-}
 
+    // check equality with HotelReservation
+    @Test
+    @Tag("score:1") @DisplayName("BnBReservation equals() Test1")
+    void testEquals1() {
+        Room[] rooms = {new Room("double"), new Room("double")};
+        Hotel hotel1 = new Hotel("Hotel1", rooms);
+        HotelReservation hotelReservation = new HotelReservation("Alex", hotel1, "double", 2);
+        BnBReservation bnBReservation = new BnBReservation("Alex", hotel1, "double", 2);
+
+        assertFalse(bnBReservation.equals(hotelReservation), "HotelReservation: equals() returns the wrong value");
+    }
+}
 
 class BasketTest {      // 7 points
 
@@ -718,6 +760,54 @@ class BasketTest {      // 7 points
         // basket1 == {reservation2, reservation1, reservation1, . . .} AND NOT {reservation2, . . .}
 
         status = (basket1.getProducts()[0].equals(reservation2) && basket1.getProducts()[1].equals(reservation1) && basket1.getProducts()[2].equals(reservation1));
+
+        assertTrue(status, "Basket: remove() didn't remove the FIRST reservation input");
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Basket remove() Test3")
+    void remove3() {
+        Basket basket1 = new Basket();
+        Airport airport1 = new Airport(44, 120, 100);
+        Airport airport2 = new Airport(50, 112, 110);
+        boolean status;
+
+        FlightReservation reservation1 = new FlightReservation("Gon", airport1, airport2);
+        FlightReservation reservation2 = new FlightReservation("Killua", airport1, airport2);
+
+        basket1.add(reservation1);
+        basket1.add(reservation1);
+        basket1.add(reservation1);
+        basket1.add(reservation2);
+        // basket1 == {reservation1, reservation2, reservation1, reservation1, . . .}
+        basket1.remove(reservation2);
+        // basket1 == {reservation2, reservation1, reservation1, . . .} AND NOT {reservation2, . . .}
+
+        status = (basket1.getProducts()[0].equals(reservation1) && basket1.getProducts()[1].equals(reservation1) && basket1.getProducts()[2].equals(reservation1));
+
+        assertTrue(status, "Basket: remove() didn't remove the FIRST reservation input");
+    }
+
+    @Test
+    @Tag("score:1") @DisplayName("Basket remove() Test4")
+    void remove4() {
+        Basket basket1 = new Basket();
+        Airport airport1 = new Airport(44, 120, 100);
+        Airport airport2 = new Airport(50, 112, 110);
+        boolean status;
+
+        FlightReservation reservation1 = new FlightReservation("Gon", airport1, airport2);
+        FlightReservation reservation2 = new FlightReservation("Killua", airport1, airport2);
+
+        basket1.add(reservation2);
+        basket1.add(reservation1);
+        basket1.add(reservation1);
+        basket1.add(reservation1);
+        // basket1 == {reservation1, reservation2, reservation1, reservation1, . . .}
+        basket1.remove(reservation2);
+        // basket1 == {reservation2, reservation1, reservation1, . . .} AND NOT {reservation2, . . .}
+
+        status = (basket1.getProducts()[0].equals(reservation1) && basket1.getProducts()[1].equals(reservation1) && basket1.getProducts()[2].equals(reservation1));
 
         assertTrue(status, "Basket: remove() didn't remove the FIRST reservation input");
     }

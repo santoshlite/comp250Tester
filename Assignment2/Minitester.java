@@ -687,6 +687,20 @@ class Part2Test {
 
         assertTrue(pos.equals(pos2));
     }
+    
+    // Testing Basic movement functionality
+    @Test
+    void posMove_1(){
+        Position p = new Position(0,0);
+        p.moveNorth();
+        assertEquals(new Position(0, -1), p);
+        p.moveEast();
+        assertEquals(new Position(1, -1), p);
+        p.moveSouth();
+        assertEquals(new Position(1, 0), p);
+        p.moveWest();
+        assertEquals(new Position(0, 0), p);
+    }
 
 
     // ==================== TARGETQUEUE CLASS TEST =================== //
@@ -755,6 +769,189 @@ class Part2Test {
 
         test.clear();
         assertTrue(test.isEmpty());
+    }
+    
+    @Test
+    void tqAddTargets_1(){
+        TargetQueue test = new TargetQueue();
+        test.addTargets(".");
+        assertTrue(test.isEmpty());
+    }
+
+    // front and back period
+    @Test
+    void tqAddTargets_2(){
+        TargetQueue test = new TargetQueue();
+        test.addTargets(".(0,0).");
+        assertEquals(test.dequeue(), new Position(0,0));
+        assertTrue(test.isEmpty());
+    }
+
+    @Test
+    void tqAddTargets_3(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("..(0,0)."));
+    }
+
+    // Nothing as input
+    @Test
+    void tqAddTargets_4(){
+        TargetQueue test = new TargetQueue();
+        test.addTargets("");
+        assertTrue(test.isEmpty());
+    }
+
+    // Just a space as input
+    @Test
+    void tqAddTargets_5(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets(" "));
+    }
+
+    // Null input
+    @Test
+    void tqAddTargets_6(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(NullPointerException.class,
+                () -> test.addTargets(null));
+    }
+
+    // Letter in coordinate
+    @Test
+    void tqAddTargets_7(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(0,0).(1,1).(0,a)"));
+    }
+
+    // Multi Digit Position Input
+    @Test
+    void tqAddTargets_8(){
+        TargetQueue test = new TargetQueue();
+        test.addTargets("(0,0).(100,9000)");
+        assertEquals(test.dequeue(), new Position(0,0));
+        assertEquals(test.dequeue(), new Position(100,9000));
+        assertTrue(test.isEmpty());
+    }
+
+    // Mad periods
+    @Test
+    void tqAddTargets_9(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("....."));
+    }
+
+    // straight up no periods
+    @Test
+    void tqAddTargets_10(){
+        TargetQueue test = new TargetQueue();
+        test.addTargets("(0,0)");
+        assertEquals(test.dequeue(), new Position(0,0));
+        assertTrue(test.isEmpty());
+    }
+
+    // missing second half
+    @Test
+    void tqAddTargets_11(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(1,"));
+    }
+
+    // missing second parenthesis
+    @Test
+    void tqAddTargets_12(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(1,2"));
+    }
+
+    // just one number
+    @Test
+    void tqAddTargets_13(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(12)"));
+    }
+
+    // negative numbers in coordinate
+    @Test
+    void tqAddTargets_14(){
+        TargetQueue test = new TargetQueue();
+        test.addTargets("(-10,-4)");
+        assertEquals(test.dequeue(), new Position(-10,-4));
+        assertTrue(test.isEmpty());
+    }
+
+    // wierd minus sign placement
+    @Test
+    void tqAddTargets_15(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(12,1-3)"));
+    }
+
+    // wierd minus sign placement pt2
+    @Test
+    void tqAddTargets_16(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(12,13-)"));
+    }
+
+    // float coordinates
+    @Test
+    void tqAddTargets_17(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(12,1.3)"));
+    }
+
+    // empty but properly formatted I suppose?
+    @Test
+    void tqAddTargets_18(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(,)"));
+    }
+
+    // properly formatted but spaces in between (in coordinate)
+    @Test
+    void tqAddTargets_19(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(1, 3)"));
+    }
+
+    // properly formatted but spaces in between (between coordinates)
+    @Test
+    void tqAddTargets_20(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(1,3). (1,3)"));
+    }
+
+    // properly formatted with leading 0
+    @Test
+    void tqAddTargets_21(){
+        TargetQueue test = new TargetQueue();
+        test.addTargets("(03,05)");
+        assertEquals(test.dequeue(), new Position(3,5));
+        assertTrue(test.isEmpty());
+    }
+
+    // Testing clear function
+    @Test
+    void tqClear_1(){
+        TargetQueue test1 = new TargetQueue();
+        TargetQueue test2 = new TargetQueue();
+        test1.addTargets("(0,0).(1,1).(0,3)");
+        test1.clear();
+        assertTrue(test1.isEmpty());
+        assertEquals(test1, test2);
     }
 
     // ==================== ACTIONQUEUE CLASS TEST =================== //
@@ -825,6 +1022,231 @@ class Part2Test {
         test.clear();
         assertTrue(test.isEmpty());
     }
+    
+    // Case #1 on A2 Doc
+    @Test
+    void aqLoadFromEncodedString_1(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("3[N]"); // NNN
+
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+
+        assertTrue(test.isEmpty());
+    }
+
+    // Case #2 on A2 Doc
+    @Test
+    void aqLoadFromEncodedString_2(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("3[NE]"); // NENENE
+
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+
+        assertTrue(test.isEmpty());
+    }
+
+    // Case #3 on A2 Doc
+    @Test
+    void aqLoadFromEncodedString_3(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("3[2[N]2[E]]1[S]"); // NNEENNEENNEES
+
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.SOUTH, test.dequeue());
+
+        assertTrue(test.isEmpty());
+    }
+
+    // Case #4 on A2 Doc
+    @Test
+    void aqLoadFromEncodedString_4(){
+        ActionQueue test = new ActionQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.loadFromEncodedString("2E[N]"));
+    }
+
+    // Case #5 on A2 Doc
+    @Test
+    void aqLoadFromEncodedString_5(){
+        ActionQueue test = new ActionQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.loadFromEncodedString("EN]"));
+    }
+
+    // Case #6 on A2 Doc
+    @Test
+    void aqLoadFromEncodedString_6(){
+        ActionQueue test = new ActionQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.loadFromEncodedString("E[EN]"));
+    }
+
+    // Case #7 on A2 Doc
+    @Test
+    void aqLoadFromEncodedString_7(){
+        ActionQueue test = new ActionQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.loadFromEncodedString("A"));
+    }
+
+    // No Brackets
+    @Test
+    void aqLoadFromEncodedString_8(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("EN"); // NNN
+
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+
+        assertTrue(test.isEmpty());
+    }
+
+    // Wierd Space
+    @Test
+    void aqLoadFromEncodedString_9(){
+        ActionQueue test = new ActionQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.loadFromEncodedString("[ N]"));
+    }
+
+    // k = 0
+    @Test
+    void aqLoadFromEncodedString_10(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("0[ESSN]");
+
+        assertTrue(test.isEmpty());
+    }
+
+    // Empty Brackets
+    @Test
+    void aqLoadFromEncodedString_11(){
+        ActionQueue test = new ActionQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.loadFromEncodedString("3[]"));
+    }
+
+    // Ed post 'using first inductive clause'
+    @Test
+    void aqLoadFromEncodedString_12(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("NE5[N]"); // NENNNNN
+
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+
+        assertTrue(test.isEmpty());
+    }
+
+    // Ed post 'using first second clause'
+    @Test
+    void aqLoadFromEncodedString_13(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("2[NE5[N]]"); // NENNNNNNENNNNN
+
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+
+        assertTrue(test.isEmpty());
+    }
+
+    // Doubly nested
+    @Test
+    void aqLoadFromEncodedString_14(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("2[3[2[N]2[E]]2[W]]"); // NNEENNEENNEEWWNNEENNEENNEEWW
+
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.WEST, test.dequeue());
+        assertEquals(Direction.WEST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.NORTH, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.EAST, test.dequeue());
+        assertEquals(Direction.WEST, test.dequeue());
+        assertEquals(Direction.WEST, test.dequeue());
+
+        assertTrue(test.isEmpty());
+    }
+
+    // Double bracket
+    @Test
+    void aqLoadFromEncodedString_15(){
+        ActionQueue test = new ActionQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.loadFromEncodedString("3[[N]]"));
+    }
+
+    // Check negative K with action Queue
+    @Test
+    void aqLoadFromEncodedString_16(){
+        ActionQueue test = new ActionQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.loadFromEncodedString("-3[N]"));
+    }
+
+    // Test clear
+    @Test
+    void aqClear_1(){
+        ActionQueue test = new ActionQueue();
+        test.loadFromEncodedString("EEEEENNNNNSSS");
+        test.clear();
+        assertTrue(test.isEmpty());
+    }
 }
 
 class Part3Test {
@@ -837,6 +1259,53 @@ class Part3Test {
         Region region = new Region(0,0,5,5);
         Position goodPos = new Position(2,4);
         assertTrue(region.contains(goodPos));
+    }
+    
+    // Strictly Positive Region
+    @Test
+    void regionContains_1(){
+        Region r = new Region(1, 1, 11, 11);
+
+        // Contains in bounds of x and y
+        assertTrue(r.contains(new Position(5, 7)));
+
+        // Contains in bounds of x (y is over)
+        assertFalse(r.contains(new Position(6, 16)));
+
+        // Contains in bounds of y (x is over)
+        assertFalse(r.contains(new Position(12, 7)));
+
+        // Contains in bounds of x (y is under)
+        assertFalse(r.contains(new Position(5, 0)));
+
+        // Contains in bounds of y (x is under)
+        assertFalse(r.contains(new Position(-14, 7)));
+
+        // Contains x and y out of bounds (over)
+        assertFalse(r.contains(new Position(14, 27)));
+
+        // Contains x and y out of bounds (under)
+        assertFalse(r.contains(new Position(-14, -7)));
+    }
+
+    // Inclusive Test
+    @Test
+    void regionContains_2(){
+        Region r = new Region(1, 1, 11, 11);
+
+        // on x (min)
+        assertTrue(r.contains(new Position(1, 5)));
+        // on y (min)
+        assertTrue(r.contains(new Position(5, 1)));
+        // on x and y (min)
+        assertTrue(r.contains(new Position(1, 1)));
+
+        // on x (max)
+        assertTrue(r.contains(new Position(11, 7)));
+        // on y (max)
+        assertTrue(r.contains(new Position(5, 11)));
+        // on x and y (max)
+        assertTrue(r.contains(new Position(11, 11)));
     }
 
     // ==================== CATERPILLAR CLASS TEST =================== //

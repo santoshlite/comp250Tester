@@ -1,4 +1,4 @@
-# COMP 250 Testers [This time we will cover all edge cases!]
+# COMP 250 Testers [This time we will cover all edge cases (hopefully)!]
 
 This is a repository for COMP 250 testers! (47 extra tests added)
 

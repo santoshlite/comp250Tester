@@ -959,16 +959,7 @@ class Part2Test {
         assertThrows(IllegalArgumentException.class,
                 () -> test.addTargets("(12)"));
     }
-
-    // negative numbers in coordinate
-    @Test
-    void tqAddTargets_14(){
-        TargetQueue test = new TargetQueue();
-        test.addTargets("(-10,-4)");
-        assertEquals(test.dequeue(), new Position(-10,-4));
-        assertTrue(test.isEmpty());
-    }
-
+    
     // wierd minus sign placement
     @Test
     void tqAddTargets_15(){

@@ -1,6 +1,6 @@
-# COMP 250 Testers [This time we will cover all edge cases (hopefully)!]
+# COMP 250 Testers [+42 tests]
 
-This is a repository for COMP 250 testers! (47 extra tests added)
+This is a repository for COMP 250 testers!
 
 ## Errors at code execution
 

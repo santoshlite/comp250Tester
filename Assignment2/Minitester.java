@@ -745,6 +745,89 @@ class Part2Test {
     }
 
     @Test
+    @Tag("score:5")
+    @DisplayName("TargetQueue addTargets() GitHub Test 1 - Killua")
+    void  tqAddTargets5() {
+        TargetQueue test = new TargetQueue();
+
+        test.addTargets("(1,2).(3,4).(5,6).");
+
+        Position pos = new Position(1, 2);
+        Position pos2 = new Position(3, 4);
+        Position pos3 = new Position(5, 6);
+
+        assertFalse(test.isEmpty());
+
+        assertEquals(pos, test.dequeue());
+        assertEquals(pos2, test.dequeue());
+        assertEquals(pos3, test.dequeue());
+
+        // Should not have any error even with "." at the end
+        // https://edstem.org/us/courses/32649/discussion/2716504
+
+    }
+
+    @Test
+    @Tag("score:5")
+    @DisplayName("TargetQueue addTargets() GitHub Test 2 - Killua")
+    void  tqAddTargets6() {
+        TargetQueue test = new TargetQueue();
+
+        test.addTargets(".");
+
+        assertTrue(test.isEmpty());
+
+        // Should not have any error even with just "." as the queue should just be empty
+        // https://edstem.org/us/courses/32649/discussion/2716504
+    }
+
+    @Test
+    @Tag("score:5")
+    @DisplayName("TargetQueue addTargets() GitHub Test 3 - Killua")
+    void  tqAddTargets7() {
+        TargetQueue test = new TargetQueue();
+
+        test.addTargets(".(1,2).(3,4)");
+
+        assertFalse(test.isEmpty());
+
+        Position pos = new Position(1, 2);
+        Position pos2 = new Position(3, 4);
+
+        assertEquals(pos, test.dequeue());
+        assertEquals(pos2, test.dequeue());
+
+        // Should not have any error even with "." in front
+        // https://edstem.org/us/courses/32649/discussion/2716504
+    }
+
+    @Test
+    @Tag("score:5")
+    @DisplayName("TargetQueue addTargets() GitHub Test 4 - Killua")
+    void  tqAddTargets8() {
+        TargetQueue test = new TargetQueue();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(1,2)..(3,4)"));
+
+        // Should throw error since there is more than one period between each position
+        // https://edstem.org/us/courses/32649/discussion/2716504
+    }
+
+    @Test
+    @Tag("score:5")
+    @DisplayName("TargetQueue addTargets() GitHub Test 5 - Killua")
+    void  tqAddTargets9() {
+        TargetQueue test = new TargetQueue();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(1, 2).(3,4)"));
+
+        // Should throw error when there is a space between characters
+        // https://edstem.org/us/courses/32649/discussion/2754324
+    }
+
+    @Test
     @Tag("score:1")
     @DisplayName("TargetQueue clear() test")
     void  tqClear() {

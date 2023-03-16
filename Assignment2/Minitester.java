@@ -1017,6 +1017,48 @@ class Part2Test {
         assertTrue(test.isEmpty());
     }
 
+    // multiple .
+    void tqAddTargets_22(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(12,2)..(2,212133)."));
+    }
+
+    // extra (
+    void tqAddTargets_23(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("((12,2).(2,212133)"));
+    }
+
+    // extra )
+    void tqAddTargets_24(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(12,2)).(2,212133)"));
+    }
+
+    // extra ()
+    void tqAddTargets_25(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("((12,2)).(2,212133)"));
+    }
+
+    // extra ) at the end
+    void tqAddTargets_26(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("(12,2).((2,212133))"));
+    }
+
+    //extra () wrapping string
+    void tqAddTargets_27(){
+        TargetQueue test = new TargetQueue();
+        assertThrows(IllegalArgumentException.class,
+                () -> test.addTargets("((12,2).(2,212133))"));
+    }
+
     // Testing clear function
     @Test
     void tqClear_1(){

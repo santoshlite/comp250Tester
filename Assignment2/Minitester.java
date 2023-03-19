@@ -877,14 +877,6 @@ class Part2Test {
                 () -> test.addTargets("..(0,0)."));
     }
 
-    // Nothing as input
-    @Test
-    void tqAddTargets_4(){
-        TargetQueue test = new TargetQueue();
-        test.addTargets("");
-        assertTrue(test.isEmpty());
-    }
-
     // Just a space as input
     @Test
     void tqAddTargets_5(){

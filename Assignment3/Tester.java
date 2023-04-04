@@ -254,6 +254,33 @@ class Part2Test {  // ========= 12 points =========
     }
 
     @Test
+    @Tag("score:2")
+    @DisplayName("Block getSelectedBlock() test4")
+    void getSelectedBlock4() throws NoSuchFieldException, IllegalAccessException {
+        Block.gen = new Random(4);
+        Block b = new Block(0, 3);
+        b.updateSizeAndPosition(16,0,0);
+        b.printColoredBlock();
+
+        Block res = b.getSelectedBlock(9,1, 2);
+
+        Field xCoordField = Block.class.getDeclaredField("xCoord");
+        Field yCoordField = Block.class.getDeclaredField("yCoord");
+        Field colorField = Block.class.getDeclaredField("color");
+        Field childrenField = Block.class.getDeclaredField("children");
+
+        xCoordField.setAccessible(true);
+        yCoordField.setAccessible(true);
+        colorField.setAccessible(true);
+        childrenField.setAccessible(true);
+
+        assertEquals(8, (int) xCoordField.get(res));
+        assertEquals(0, (int) yCoordField.get(res));
+        assertEquals(GameColors.YELLOW, colorField.get(res));
+        assertEquals(0, ((Block[]) childrenField.get(res)).length);
+    }
+
+    @Test
     @Tag("score:1")
     @DisplayName("Block reflect() test1")
     void reflect1() {

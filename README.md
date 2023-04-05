@@ -1,4 +1,4 @@
-# COMP 250 Testers
+# COMP 250 Testers [+6 tests for A3]
 
 This is a repository for COMP 250 testers!
 

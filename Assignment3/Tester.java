@@ -81,6 +81,15 @@ class Part1Test {   // =======  12 points =======
         assertEquals(expectedColorUL, actualColorUL);  // checking if the colors at level 2 are correct for the upper left child
     }
 
+
+    // Testing for the case were lvl > maxDepth, as per the TA's answer on Ed
+    // https://edstem.org/us/courses/32649/discussion/2880926
+    @Test
+    @DisplayName("Block constructor test3")
+    void BlockConstructorTest3() {
+        assertThrows(IllegalArgumentException.class, () -> new Block(3, 1));
+    }
+
     @Test
     @Tag("score:3")
     @DisplayName("Block updateSizeAndPosition() test1")
@@ -187,8 +196,8 @@ class Part2Test {  // ========= 12 points =========
     void getSelectedBlock1() {
         Block b = new Block(0, 0, 0, 0, 2, null, new Block[0]);
 
-        assertThrows(IllegalArgumentException.class, () -> b.getSelectedBlock(2,15,4));
-        assertThrows(IllegalArgumentException.class, () -> b.getSelectedBlock(15,2,-1));
+        assertThrows(IllegalArgumentException.class, () -> b.getSelectedBlock(2, 15, 4));
+        assertThrows(IllegalArgumentException.class, () -> b.getSelectedBlock(15, 2, -1));
     }
 
     @Test
@@ -224,9 +233,9 @@ class Part2Test {  // ========= 12 points =========
     void getSelectedBlock3() throws NoSuchFieldException, IllegalAccessException {
         Block.gen = new Random(4);
         Block b = new Block(0, 3);
-        b.updateSizeAndPosition(16,0,0);
+        b.updateSizeAndPosition(16, 0, 0);
 
-        Block res = b.getSelectedBlock(9,10, 2);
+        Block res = b.getSelectedBlock(9, 10, 2);
 
         Field xCoordField = Block.class.getDeclaredField("xCoord");
         Field yCoordField = Block.class.getDeclaredField("yCoord");
@@ -259,10 +268,10 @@ class Part2Test {  // ========= 12 points =========
     void getSelectedBlock4() throws NoSuchFieldException, IllegalAccessException {
         Block.gen = new Random(4);
         Block b = new Block(0, 3);
-        b.updateSizeAndPosition(16,0,0);
+        b.updateSizeAndPosition(16, 0, 0);
         b.printColoredBlock();
 
-        Block res = b.getSelectedBlock(9,1, 2);
+        Block res = b.getSelectedBlock(9, 1, 2);
 
         Field xCoordField = Block.class.getDeclaredField("xCoord");
         Field yCoordField = Block.class.getDeclaredField("yCoord");
@@ -286,8 +295,8 @@ class Part2Test {  // ========= 12 points =========
     void reflect1() {
         Block b = new Block(0, 0, 0, 0, 2, null, new Block[0]);
 
-        assertThrows(IllegalArgumentException.class, () ->  b.reflect(2));
-        assertThrows(IllegalArgumentException.class, () ->  b.reflect(-1));
+        assertThrows(IllegalArgumentException.class, () -> b.reflect(2));
+        assertThrows(IllegalArgumentException.class, () -> b.reflect(-1));
     }
 
     @Test
@@ -326,8 +335,8 @@ class Part2Test {  // ========= 12 points =========
     @DisplayName("Block rotate() test1")
     void rotate1() {
         Block b = new Block();
-        assertThrows(IllegalArgumentException.class, () ->  b.rotate(2));
-        assertThrows(IllegalArgumentException.class, () ->  b.rotate(-1));
+        assertThrows(IllegalArgumentException.class, () -> b.rotate(2));
+        assertThrows(IllegalArgumentException.class, () -> b.rotate(-1));
     }
 
     @Test
@@ -353,7 +362,7 @@ class Part2Test {  // ========= 12 points =========
 
         List<Color> expected = List.of(GameColors.BLUE, GameColors.RED, GameColors.BLUE, GameColors.GREEN);
 
-        List <Color> actual = new ArrayList<>();
+        List<Color> actual = new ArrayList<>();
         for (Block child : childrenLevel1) {
             actual.add((Color) colorField.get(child));
         }
@@ -387,7 +396,7 @@ class Part2Test {  // ========= 12 points =========
     void smash2() throws NoSuchFieldException, IllegalAccessException {
         Block.gen = new Random(0);
         Block b = new Block(1, 2);
-        b.updateSizeAndPosition(4, 0,0);
+        b.updateSizeAndPosition(4, 0, 0);
 
         b.smash();
 
@@ -407,6 +416,27 @@ class Part2Test {  // ========= 12 points =========
 
         assertEquals(expected, actual);
     }
+
+    // smash root level
+    @Test
+    @DisplayName("Block smash() test3")
+    void smash3() {
+        Block.gen = new Random(0);
+        Block b = new Block(0, 4);
+        b.updateSizeAndPosition(16, 0, 0);
+        assertFalse(b.smash());
+    }
+
+    // smash leaf
+    @Test
+    @DisplayName("Block smash() test4")
+    void smash4() {
+        Block.gen = new Random(0);
+        Block b = new Block(4, 4);
+        b.updateSizeAndPosition(16, 0, 0);
+        assertFalse(b.smash());
+    }
+
 }
 
 class Part3Test {  // ======== 16 points ========
@@ -417,7 +447,7 @@ class Part3Test {  // ======== 16 points ========
     void Blockflatten1() {
         Block.gen = new Random(2);
         Block b = new Block(0, 2);
-        b.updateSizeAndPosition(16, 0,0);
+        b.updateSizeAndPosition(16, 0, 0);
 
         Color[][] c = b.flatten();
 
@@ -496,6 +526,27 @@ class Part3Test {  // ======== 16 points ========
         }
     }
 
+    // test for if flattened board is square
+    @Test
+    @DisplayName("Block flatten() test4")
+    void Blockflatten4() {
+        Block b = new Block(0, 10);
+        b.updateSizeAndPosition(1024, 0, 0);
+        Color[][] board = b.flatten();
+        assertEquals(board.length, board[0].length);
+        assertEquals(1024, board.length);
+    }
+
+    // test for if flattened board is minimized to unit-cells
+    @Test
+    @DisplayName("Block flatten() test5")
+    void Blockflatten5() {
+        Block b = new Block(0, 10);
+        b.updateSizeAndPosition(2048, 0, 0);
+        Color[][] board = b.flatten();
+        assertEquals(board.length, board[0].length);
+        assertEquals(1024, board.length);
+    }
 
     @Test
     @Tag("score:1")

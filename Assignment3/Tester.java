@@ -260,7 +260,6 @@ class Part2Test {  // ========= 12 points =========
         Block.gen = new Random(4);
         Block b = new Block(0, 3);
         b.updateSizeAndPosition(16,0,0);
-        b.printColoredBlock();
 
         Block res = b.getSelectedBlock(9,1, 2);
 
@@ -566,6 +565,18 @@ class Part3Test {  // ======== 16 points ========
 
         BlobGoal g = new BlobGoal(GameColors.YELLOW);
         assertEquals(2, g.undiscoveredBlobSize(1, 1, b.flatten(), new boolean[4][4]));
+    }
+
+    @Test
+    @Tag("score:2")
+    @DisplayName("BlobGoal undiscoveredBlobSize() test4")
+    void BGBlobSize4() {
+        Block.gen = new Random(8);
+        Block b = new Block(0, 2);
+
+        BlobGoal g = new BlobGoal(GameColors.YELLOW);
+
+        assertThrows(IllegalArgumentException.class, () -> g.undiscoveredBlobSize(-1, 1, b.flatten(), new boolean[4][4]));
     }
 
     @Test

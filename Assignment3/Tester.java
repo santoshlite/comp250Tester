@@ -145,6 +145,14 @@ class Part1Test {   // =======  12 points =======
     }
 
     @Test
+    @DisplayName("Block updateSizeAndPosition() test3")
+    void UpdateSizeAndPositionTest3() {
+        Block b = new Block(0, 0, 0, 0, 0, null, new Block[0]);
+
+        assertThrows(IllegalArgumentException.class, () -> b.updateSizeAndPosition(0, 0, 0));
+    }
+
+    @Test
     @Tag("score:2")
     @DisplayName("Block getBlocksToDraw() test1")
     void GetBlocksToDrawTest1() {
@@ -269,7 +277,6 @@ class Part2Test {  // ========= 12 points =========
         Block.gen = new Random(4);
         Block b = new Block(0, 3);
         b.updateSizeAndPosition(16, 0, 0);
-        b.printColoredBlock();
 
         Block res = b.getSelectedBlock(9, 1, 2);
 
@@ -549,6 +556,22 @@ class Part3Test {  // ======== 16 points ========
     }
 
     @Test
+    @DisplayName("Block flatten() test6")
+    void Blockflatten6() {
+        Block b = new Block(0, 0, 1, 0, 0, GameColors.RED, new Block[0]);
+        b.updateSizeAndPosition(1, 0, 0);
+        Color[][] board = b.flatten();
+        Color[][] expected = {{GameColors.RED}};
+
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 1; j++) {
+                assertEquals(expected[i][j], board[i][j]);
+            }
+        }
+
+    }
+
+    @Test
     @Tag("score:1")
     @DisplayName("PerimeterGoal score() test1")
     void PGscore1() {
@@ -575,6 +598,39 @@ class Part3Test {  // ======== 16 points ========
 
         PerimeterGoal p = new PerimeterGoal(GameColors.YELLOW);
         assertEquals(3, p.score(b));
+    }
+
+    @Test
+    @DisplayName("PerimeterGoal score() test3")
+    void PGscore3() {
+        Block.gen = new Random(10);
+        Block b = new Block(0, 1);
+        b.updateSizeAndPosition(16, 0, 0);
+
+        PerimeterGoal p = new PerimeterGoal(GameColors.GREEN);
+        assertEquals(4, p.score(b));
+    }
+
+    @Test
+    @DisplayName("PerimeterGoal score() test4")
+    void PGscore4() {
+        Block.gen = new Random(20);
+        Block b = new Block(0, 1);
+        b.updateSizeAndPosition(48, 0, 0);
+
+        PerimeterGoal p = new PerimeterGoal(GameColors.YELLOW);
+        assertEquals(4, p.score(b));
+    }
+
+    @Test
+    @DisplayName("PerimeterGoal score() test4")
+    void PGscore5() {
+        Block.gen = new Random(20);
+        Block b = new Block(0, 1);
+        b.updateSizeAndPosition(48, 0, 0);
+
+        PerimeterGoal p = new PerimeterGoal(GameColors.GREEN);
+        assertEquals(0, p.score(b));
     }
 
     @Test
@@ -654,4 +710,36 @@ class Part3Test {  // ======== 16 points ========
         assertEquals(18, g.score(b));
     }
 
+    @Test
+    @DisplayName("BlobGoal score() test3")
+    void BGscore3() {
+        Block.gen = new Random(10);
+        Block b = new Block(0, 1);
+        b.updateSizeAndPosition(16, 0, 0);
+
+        BlobGoal bg = new BlobGoal(GameColors.GREEN);
+        assertEquals(2, bg.score(b));
+    }
+
+    @Test
+    @DisplayName("BlobGoal score() test4")
+    void BGscore4() {
+        Block.gen = new Random(20);
+        Block b = new Block(0, 1);
+        b.updateSizeAndPosition(16, 0, 0);
+
+        BlobGoal bg = new BlobGoal(GameColors.RED);
+        assertEquals(1, bg.score(b));
+    }
+
+    @Test
+    @DisplayName("BlobGoal score() test5")
+    void BGscore5() {
+        Block.gen = new Random(20);
+        Block b = new Block(0, 1);
+        b.updateSizeAndPosition(16, 0, 0);
+
+        BlobGoal bg = new BlobGoal(GameColors.YELLOW);
+        assertEquals(2, bg.score(b));
+    }
 }

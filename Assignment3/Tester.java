@@ -338,6 +338,37 @@ class Part2Test {  // ========= 12 points =========
     }
 
     @Test
+    @DisplayName("Block reflect() test3")
+    void reflect3() throws NoSuchFieldException, IllegalAccessException {
+        Block[] children = new Block[4];
+        children[0] = new Block(1, 0, 1, 1, 1, GameColors.YELLOW, new Block[0]);  // UR
+        children[1] = new Block(0, 0, 1, 1, 1, GameColors.RED, new Block[0]);   // UL
+        children[2] = new Block(0, 1, 1, 1, 1, GameColors.GREEN, new Block[0]); // LL
+        children[3] = new Block(1, 1, 1, 1, 1, GameColors.BLUE, new Block[0]);  // LR
+        Block b = new Block(0, 0, 2, 0, 1, null, children);
+
+        b.reflect(1);  // reflect vertically
+
+        Field childrenField = Block.class.getDeclaredField("children");
+        Field colorField = Block.class.getDeclaredField("color");
+        childrenField.setAccessible(true);
+        colorField.setAccessible(true);
+
+        Block[] childrenLevel1 = (Block[]) childrenField.get(b);
+
+        List<Color> expected = List.of(GameColors.RED, GameColors.YELLOW, GameColors.BLUE, GameColors.GREEN);
+        List<Color> actual = new ArrayList<>();
+
+        for (Block child : childrenLevel1) {
+            actual.add((Color) colorField.get(child));
+        }
+
+        assertEquals(expected, actual);
+
+    }
+
+
+    @Test
     @Tag("score:1")
     @DisplayName("Block rotate() test1")
     void rotate1() {
@@ -358,7 +389,7 @@ class Part2Test {  // ========= 12 points =========
 
         Block b = new Block(0, 0, 2, 0, 1, null, children);
 
-        b.rotate(1); // rotate counter-clockwise
+        b.rotate(1); // rotate clockwise
 
         Field childrenField = Block.class.getDeclaredField("children");
         Field colorField = Block.class.getDeclaredField("color");
@@ -368,6 +399,36 @@ class Part2Test {  // ========= 12 points =========
         Block[] childrenLevel1 = (Block[]) childrenField.get(b);
 
         List<Color> expected = List.of(GameColors.BLUE, GameColors.RED, GameColors.BLUE, GameColors.GREEN);
+
+        List<Color> actual = new ArrayList<>();
+        for (Block child : childrenLevel1) {
+            actual.add((Color) colorField.get(child));
+        }
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("Block rotate() test3")
+    void rotate3() throws NoSuchFieldException, IllegalAccessException {
+        Block[] children = new Block[4];
+        children[0] = new Block(1, 0, 1, 1, 1, GameColors.GREEN, new Block[0]);  // UR
+        children[1] = new Block(0, 0, 1, 1, 1, GameColors.BLUE, new Block[0]);   // UL
+        children[2] = new Block(0, 1, 1, 1, 1, GameColors.RED, new Block[0]); // LL
+        children[3] = new Block(1, 1, 1, 1, 1, GameColors.BLUE, new Block[0]);  // LR
+
+        Block b = new Block(0, 0, 2, 0, 1, null, children);
+
+        b.rotate(0); // rotate counter-clockwise
+
+        Field childrenField = Block.class.getDeclaredField("children");
+        Field colorField = Block.class.getDeclaredField("color");
+        childrenField.setAccessible(true);
+        colorField.setAccessible(true);
+
+        Block[] childrenLevel1 = (Block[]) childrenField.get(b);
+
+        List<Color> expected = List.of(GameColors.BLUE, GameColors.GREEN, GameColors.BLUE, GameColors.RED);
 
         List<Color> actual = new ArrayList<>();
         for (Block child : childrenLevel1) {

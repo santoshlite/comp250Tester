@@ -102,6 +102,38 @@ class HashTableTests {
     assertEquals(2, table.size());
   }
 
+  //same hash value
+  @Test
+  @DisplayName("Put test 4")
+  void putTest4() {
+      MyHashTable<Object, Object> table = new MyHashTable<>();
+      int key1 = 1;
+      int val1 = 20;
+      int key2 = 17;
+      int val2 = 200;
+
+      int placeAt1 = table.hashFunction(key1);
+      int placeAt2 = table.hashFunction(key2);
+
+      ArrayList<LinkedList<MyPair<Object, Object>>> buckets = table.getBuckets();
+
+      Object output1 = table.put(key1, val1);
+      Object output2 = table.put(key2, val2);
+
+      assertNotNull(buckets.get(placeAt1));
+      assertNotNull(buckets.get(placeAt1).peek());
+      assertNotNull(buckets.get(placeAt2));
+      assertNotNull(buckets.get(placeAt2).peek());
+
+      assertEquals(key1, buckets.get(placeAt1).peek().getKey());
+      assertEquals(val1, buckets.get(placeAt1).peek().getValue());
+      assertEquals(key2, buckets.get(placeAt2).peekLast().getKey());
+      assertEquals(val2, buckets.get(placeAt2).peekLast().getValue());
+
+      assertNull(output1);
+      assertNull(output2);
+  }
+
   // normal get operations
   @Test
   @DisplayName("Get test 1")

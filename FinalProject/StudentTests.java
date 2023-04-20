@@ -133,7 +133,6 @@ class HashTableTests {
     assertNull(output2);
   }
 
-
   // normal get operations
   @Test
   @DisplayName("Get test 1")

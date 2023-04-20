@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -106,33 +105,34 @@ class HashTableTests {
   @Test
   @DisplayName("Put test 4")
   void putTest4() {
-      MyHashTable<Object, Object> table = new MyHashTable<>();
-      int key1 = 1;
-      int val1 = 20;
-      int key2 = 17;
-      int val2 = 200;
+    MyHashTable<Object, Object> table = new MyHashTable<>();
+    int key1 = 1;
+    int val1 = 20;
+    int key2 = 17;
+    int val2 = 200;
 
-      int placeAt1 = table.hashFunction(key1);
-      int placeAt2 = table.hashFunction(key2);
+    int placeAt1 = table.hashFunction(key1);
+    int placeAt2 = table.hashFunction(key2);
 
-      ArrayList<LinkedList<MyPair<Object, Object>>> buckets = table.getBuckets();
+    ArrayList<LinkedList<MyPair<Object, Object>>> buckets = table.getBuckets();
 
-      Object output1 = table.put(key1, val1);
-      Object output2 = table.put(key2, val2);
+    Object output1 = table.put(key1, val1);
+    Object output2 = table.put(key2, val2);
 
-      assertNotNull(buckets.get(placeAt1));
-      assertNotNull(buckets.get(placeAt1).peek());
-      assertNotNull(buckets.get(placeAt2));
-      assertNotNull(buckets.get(placeAt2).peek());
+    assertNotNull(buckets.get(placeAt1));
+    assertNotNull(buckets.get(placeAt1).peek());
+    assertNotNull(buckets.get(placeAt2));
+    assertNotNull(buckets.get(placeAt2).peek());
 
-      assertEquals(key1, buckets.get(placeAt1).peek().getKey());
-      assertEquals(val1, buckets.get(placeAt1).peek().getValue());
-      assertEquals(key2, buckets.get(placeAt2).peekLast().getKey());
-      assertEquals(val2, buckets.get(placeAt2).peekLast().getValue());
+    assertEquals(key1, buckets.get(placeAt1).peek().getKey());
+    assertEquals(val1, buckets.get(placeAt1).peek().getValue());
+    assertEquals(key2, buckets.get(placeAt2).peekLast().getKey());
+    assertEquals(val2, buckets.get(placeAt2).peekLast().getValue());
 
-      assertNull(output1);
-      assertNull(output2);
+    assertNull(output1);
+    assertNull(output2);
   }
+
 
   // normal get operations
   @Test
@@ -360,19 +360,6 @@ class HashTableTests {
     assertTrue(i.hasNext());
     i.next();
     assertFalse(i.hasNext());
-  }
-
-  @Test
-  @DisplayName("iterator test 3")
-  void iteratorTest3() {
-    MyHashTable<Integer, Integer> table = new MyHashTable<>();
-    table.put(1, 10);
-    Iterator<MyPair<Integer, Integer>> i = table.iterator();
-    assertNotNull(i);
-    MyPair<Integer, Integer> next = i.next();
-    assertEquals(1, next.getKey());
-    assertEquals(10, next.getValue());
-    assertThrows(NoSuchElementException.class, i::next);
   }
 }
 

@@ -346,6 +346,34 @@ class HashTableTests {
     assertEquals(40, table.get(4));
   }
 
+  // rehashing index test
+  @Test
+  @DisplayName("rehash test 3")
+  void rehashTest3() {
+      MyHashTable<Object, Object> table = new MyHashTable<>();
+
+      assertEquals(16, table.numBuckets());
+
+      table.put(1, 10);
+      table.put(16, 20);
+      table.put(17, 30);
+      table.put(32, 40);
+
+      ArrayList<LinkedList<MyPair<Object, Object>>> buckets1 = table.getBuckets();
+      assertEquals(2, buckets1.get(0).size());
+      assertEquals(2, buckets1.get(1).size());
+
+      table.rehash();
+      assertEquals(32, table.numBuckets());
+
+      // if properly rehashed, the index of elements in the hashmap should be properly reorganized
+      ArrayList<LinkedList<MyPair<Object, Object>>> buckets2 = table.getBuckets();
+      assertEquals(1, buckets2.get(0).size());
+      assertEquals(1, buckets2.get(1).size());
+      assertEquals(1, buckets2.get(16).size());
+      assertEquals(1, buckets2.get(17).size());
+  }
+
   // standard iteration
   @Test
   @DisplayName("iterator test 1")

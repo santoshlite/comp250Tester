@@ -158,6 +158,21 @@ class HashTableTests {
     assertNull(table.get(3));
   }
 
+  // Overwrite the value and get with the key
+  @Test
+  @DisplayName("Get test 3")
+  void getTest3() {
+      MyHashTable<Object, Object> table = new MyHashTable<>();
+      int key = 10;
+      int val1 = 20;
+      int val2 = 200;
+
+      table.put(key, val1);
+      table.put(key, val2);
+
+      assertEquals(200, table.get(10));
+  }
+
   @Test
   @DisplayName("Remove test 1")
   void removeTest1() {

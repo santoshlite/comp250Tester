@@ -497,7 +497,7 @@ class DataAnalyzerTests {
     DataAnalyzer analyzer = new GenderByKeyword(p);
     MyHashTable<String, Integer> output = analyzer.getDistByKeyword("caring");
     assertNotNull(output.get("M"));
-    assertNotNull(output.get("W"));
+    assertNotNull(output.get("F"));
     assertNotNull(output.get("X"));
   }
 
@@ -510,11 +510,11 @@ class DataAnalyzerTests {
     MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("caring");
     MyHashTable<String, Integer> output2 = analyzer.getDistByKeyword("smart");
 
-    assertEquals(9, output1.get("W"));
+    assertEquals(9, output1.get("F"));
     assertEquals(4, output1.get("M"));
     assertEquals(0, output1.get("X"));
 
-    assertEquals(6, output2.get("W"));
+    assertEquals(6, output2.get("F"));
     assertEquals(14, output2.get("M"));
     assertEquals(0, output2.get("X"));
   }

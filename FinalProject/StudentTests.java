@@ -489,6 +489,32 @@ class DataAnalyzerTests {
     assertEquals(v1, v2);
   }
 
+  // round the average rating to two decimal number
+  @Test
+  @DisplayName("RatingCountPerProf Test 3")
+  void ratingCountPerProfTest3() {
+    Parser parser = new Parser("");
+    String[] prof1 = {"Diana  Oqimachi","Long Beach City College","Counseling department","08/26/2014","5","1","Diana is a great professor and counselor!I took the class because I need extra units but I learned so much. She\'s very helpful and willing to answer any questions.It was like having a counseling appointment for 6 weeks.Now,I make my appointments with her.She as motivated as if it was her very first time teaching or counseling.We need more like her!","F"};
+    String[] prof2 = {"Diana  Oqimachi","Long Beach City College","Counseling department","04/28/2013","5","1","Super easy, funny, enthusiastic and helpful!!","F"};
+    String[] prof3 = {"Diana  Oqimachi","Long Beach City College","Counseling department","04/28/2013","4.5","1","She gives an extremely helpful and very fun class environment. I recommend this class for any freshmen who don\\'t quite understand the concept of GPA\\'s or regulations in LBCC.","F"};
+    String[] prof4 = {"Diana  Oqimachi","Long Beach City College","Counseling department","04/28/2013","4","1","She gives an extremely helpful and very fun class environment. I recommend this class for any freshmen who don\\'t quite understand the concept of GPA\\'s or regulations in LBCC.","F"};
+
+    parser.data.add(prof1);
+    parser.data.add(prof2);
+    parser.data.add(prof3);
+    parser.data.add(prof4);
+
+    DataAnalyzer analyzer = new RatingDistributionBySchool(parser);
+    MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("Long Beach City College");
+
+    ArrayList<String> k1 = output1.getKeySet();
+
+    ArrayList<String> expect = new ArrayList<>();
+    expect.add("diana  oqimachi" + "\n" + "4.63");
+
+    assertEquals(expect, k1);
+  }
+
   // Correct gender output, F -> W
   @Test
   @DisplayName("GenderByKeyword Test 1")

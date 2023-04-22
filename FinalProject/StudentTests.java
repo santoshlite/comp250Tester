@@ -3,10 +3,7 @@ package finalproject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.stream.Collector.*;
 import java.util.stream.Stream.*;
 
@@ -165,15 +162,15 @@ class HashTableTests {
   @Test
   @DisplayName("Get test 3")
   void getTest3() {
-      MyHashTable<Object, Object> table = new MyHashTable<>();
-      int key = 10;
-      int val1 = 20;
-      int val2 = 200;
+    MyHashTable<Object, Object> table = new MyHashTable<>();
+    int key = 10;
+    int val1 = 20;
+    int val2 = 200;
 
-      table.put(key, val1);
-      table.put(key, val2);
+    table.put(key, val1);
+    table.put(key, val2);
 
-      assertEquals(200, table.get(10));
+    assertEquals(200, table.get(10));
   }
 
   @Test
@@ -350,28 +347,28 @@ class HashTableTests {
   @Test
   @DisplayName("rehash test 3")
   void rehashTest3() {
-      MyHashTable<Object, Object> table = new MyHashTable<>();
+    MyHashTable<Object, Object> table = new MyHashTable<>();
 
-      assertEquals(16, table.numBuckets());
+    assertEquals(16, table.numBuckets());
 
-      table.put(1, 10);
-      table.put(16, 20);
-      table.put(17, 30);
-      table.put(32, 40);
+    table.put(1, 10);
+    table.put(16, 20);
+    table.put(17, 30);
+    table.put(32, 40);
 
-      ArrayList<LinkedList<MyPair<Object, Object>>> buckets1 = table.getBuckets();
-      assertEquals(2, buckets1.get(0).size());
-      assertEquals(2, buckets1.get(1).size());
+    ArrayList<LinkedList<MyPair<Object, Object>>> buckets1 = table.getBuckets();
+    assertEquals(2, buckets1.get(0).size());
+    assertEquals(2, buckets1.get(1).size());
 
-      table.rehash();
-      assertEquals(32, table.numBuckets());
+    table.rehash();
+    assertEquals(32, table.numBuckets());
 
-      // if properly rehashed, the index of elements in the hashmap should be properly reorganized
-      ArrayList<LinkedList<MyPair<Object, Object>>> buckets2 = table.getBuckets();
-      assertEquals(1, buckets2.get(0).size());
-      assertEquals(1, buckets2.get(1).size());
-      assertEquals(1, buckets2.get(16).size());
-      assertEquals(1, buckets2.get(17).size());
+    // if properly rehashed, the index of elements in the hashmap should be properly reorganized
+    ArrayList<LinkedList<MyPair<Object, Object>>> buckets2 = table.getBuckets();
+    assertEquals(1, buckets2.get(0).size());
+    assertEquals(1, buckets2.get(1).size());
+    assertEquals(1, buckets2.get(16).size());
+    assertEquals(1, buckets2.get(17).size());
   }
 
   // standard iteration
@@ -494,10 +491,22 @@ class DataAnalyzerTests {
   @DisplayName("RatingCountPerProf Test 3")
   void ratingCountPerProfTest3() {
     Parser parser = new Parser("");
-    String[] prof1 = {"Diana  Oqimachi","Long Beach City College","Counseling department","08/26/2014","5","1","Diana is a great professor and counselor!I took the class because I need extra units but I learned so much. She\'s very helpful and willing to answer any questions.It was like having a counseling appointment for 6 weeks.Now,I make my appointments with her.She as motivated as if it was her very first time teaching or counseling.We need more like her!","F"};
-    String[] prof2 = {"Diana  Oqimachi","Long Beach City College","Counseling department","04/28/2013","5","1","Super easy, funny, enthusiastic and helpful!!","F"};
-    String[] prof3 = {"Diana  Oqimachi","Long Beach City College","Counseling department","04/28/2013","4.5","1","She gives an extremely helpful and very fun class environment. I recommend this class for any freshmen who don\\'t quite understand the concept of GPA\\'s or regulations in LBCC.","F"};
-    String[] prof4 = {"Diana  Oqimachi","Long Beach City College","Counseling department","04/28/2013","4","1","She gives an extremely helpful and very fun class environment. I recommend this class for any freshmen who don\\'t quite understand the concept of GPA\\'s or regulations in LBCC.","F"};
+
+    HashMap<String, Integer> fields = new HashMap<>();
+    fields.put("professor_name", 0);
+    fields.put("school_name", 1);
+    fields.put("department_name", 2);
+    fields.put("post_date", 3);
+    fields.put("student_star", 4);
+    fields.put("student_difficult", 5);
+    fields.put("comments", 6);
+    fields.put("gender", 7);
+
+    parser.fields = fields;
+    String[] prof1 = {"Diana  Oqimachi", "Long Beach City College", "Counseling department", "08/26/2014", "5", "1", "Diana is a great professor and counselor!I took the class because I need extra units but I learned so much. She\'s very helpful and willing to answer any questions.It was like having a counseling appointment for 6 weeks.Now,I make my appointments with her.She as motivated as if it was her very first time teaching or counseling.We need more like her!", "F"};
+    String[] prof2 = {"Diana  Oqimachi", "Long Beach City College", "Counseling department", "04/28/2013", "5", "1", "Super easy, funny, enthusiastic and helpful!!", "F"};
+    String[] prof3 = {"Diana  Oqimachi", "Long Beach City College", "Counseling department", "04/28/2013", "4.5", "1", "She gives an extremely helpful and very fun class environment. I recommend this class for any freshmen who don\\'t quite understand the concept of GPA\\'s or regulations in LBCC.", "F"};
+    String[] prof4 = {"Diana  Oqimachi", "Long Beach City College", "Counseling department", "04/28/2013", "4", "1", "She gives an extremely helpful and very fun class environment. I recommend this class for any freshmen who don\\'t quite understand the concept of GPA\\'s or regulations in LBCC.", "F"};
 
     parser.data.add(prof1);
     parser.data.add(prof2);
@@ -609,11 +618,26 @@ class DataAnalyzerTests {
     ArrayList<String[]> dataArray1 = new ArrayList<>();
     ArrayList<String[]> dataArray2 = new ArrayList<>();
 
+    HashMap<String, Integer> fields = new HashMap<>();
+    fields.put("professor_name", 0);
+    fields.put("school_name", 1);
+    fields.put("department_name", 2);
+    fields.put("post_date", 3);
+    fields.put("student_star", 4);
+    fields.put("student_difficult", 5);
+    fields.put("comments", 6);
+    fields.put("gender", 7);
 
-    String[] arr1 = {"fun", "fun", "fun"};
-    String[] arr2 = {"fun"};
+    parser1.fields = fields;
+    parser2.fields = fields;
+
+    String[] arr1 = {"Diana  Oqimachi", "Long Beach City College", "Counseling department", "08/26/2014", "5", "1", "fun"};
+    String[] arr2 = {"Diana  Oqimachi", "Long Beach City College", "Counseling department", "08/26/2014", "5", "1", "Fun fun fun!"};
     dataArray1.add(arr1);
     dataArray2.add(arr2);
+
+    parser1.data = dataArray1;
+    parser2.data = dataArray2;
 
     DataAnalyzer analyzer1 = new RatingByKeyword(parser1);
     DataAnalyzer analyzer2 = new RatingByKeyword(parser2);
@@ -625,10 +649,11 @@ class DataAnalyzerTests {
     ArrayList<String> k2 = output2.getKeySet();
     ArrayList<Integer> v1 = output1.getValueSet();
     ArrayList<Integer> v2 = output2.getValueSet();
+
     Collections.sort(k1);
     Collections.sort(k2);
     Collections.sort(v1);
-    Collections.sort(v2);
+    Collections.sort(v1);
 
     assertEquals(k1, k2);
     assertEquals(v1, v2);

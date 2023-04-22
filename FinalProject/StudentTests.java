@@ -574,6 +574,40 @@ class DataAnalyzerTests {
     assertEquals(v1, v2);
   }
 
+  // check for abundant words in one sentence
+  @Test
+  @DisplayName("RatingByKeyword Test 3")
+  void ratingByKeywordTest3() {
+    Parser parser1 = new Parser("");
+    Parser parser2 = new Parser("");
+    ArrayList<String[]> dataArray1 = new ArrayList<>();
+    ArrayList<String[]> dataArray2 = new ArrayList<>();
+
+
+    String[] arr1 = {"fun", "fun", "fun"};
+    String[] arr2 = {"fun"};
+    dataArray1.add(arr1);
+    dataArray2.add(arr2);
+
+    DataAnalyzer analyzer1 = new RatingByKeyword(parser1);
+    DataAnalyzer analyzer2 = new RatingByKeyword(parser2);
+
+    MyHashTable<String, Integer> output1 = analyzer1.getDistByKeyword("fun");
+    MyHashTable<String, Integer> output2 = analyzer2.getDistByKeyword("fun");
+
+    ArrayList<String> k1 = output1.getKeySet();
+    ArrayList<String> k2 = output2.getKeySet();
+    ArrayList<Integer> v1 = output1.getValueSet();
+    ArrayList<Integer> v2 = output2.getValueSet();
+    Collections.sort(k1);
+    Collections.sort(k2);
+    Collections.sort(v1);
+    Collections.sort(v2);
+
+    assertEquals(k1, k2);
+    assertEquals(v1, v2);
+  }
+
   @Test
   @DisplayName("RatingByGender Test 1")
   void ratingByGenderTest1() {

@@ -1,11 +1,14 @@
 package finalproject;
 
+import javafx.util.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collector.*;
 import java.util.stream.Stream.*;
+import java.time.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -692,6 +695,214 @@ class DataAnalyzerTests {
 
     assertEquals(k1, k2);
     assertEquals(v1, v2);
+  }
+}
+
+// The below tests do not assert any outputs,
+// they time the runtime of each of your functions
+// with different number of entries and print out the time taken
+// You should observe with your own due diligence whether the increase in runtime is
+// your desired time complexity:
+//   constant O(1) for getDistByKeyword
+//   linear by bucket numbers O(m) for instantiation
+// You can plot it in your preferred data visualization method for some visuals
+
+// NOTE:
+// This method of stress testing is naive and not production-level
+// due to factors such different computer hardwares, compiler optimizations, and more
+// Please only use the data as a mere reference.
+class TimeTests {
+  // parser with no data
+  private final String[] NAMES = new String[]
+    {"Sam",
+      "Rebecca",
+      "Albert",
+      "Eric",
+      "Ludwig",
+      "XQC",
+      "Hasan"};
+  private final String[] UNI_WORDS = new String[]
+    {"Wild",
+      "Chicken",
+      "Omega",
+      "Theta",
+      "Polytechnic",
+      "Kappa"};
+  private final String[] DEPARTMENTS = new String[]
+    {"Mathematics",
+      "Philosophy",
+      "Physics",
+      "Statistics",
+      "Computer Science",
+      "Linguistic"};
+  private final String[] DAY = new String[]
+    {"01", "02", "03", "04", "05", "06", "07", "08", "09",
+      "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+      "20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
+      "30", "31"};
+  private final String[] MONTH = new String[]
+    {"01", "02", "03", "04", "05", "06", "07", "08", "09",
+      "10", "11", "12"};
+  private final String[] YEAR = new String[]{"1999", "2000", "2001", "2002", "2003"};
+  private final String[] RATINGS = new String[]{"1", "2", "3", "4", "5"};
+
+  Parser p = new Parser("/RateMyProf_Data_Gendered.csv");
+
+  private void parserInitFields() {
+    p.fields = new HashMap<>();
+    p.fields.put("professor_name", 0);
+    p.fields.put("school_name", 1);
+    p.fields.put("department_name", 2);
+    p.fields.put("post_date", 3);
+    p.fields.put("student_star", 4);
+    p.fields.put("student_difficult", 5);
+    p.fields.put("comments", 6);
+    p.fields.put("gender", 7);
+  }
+
+  private final int[] NUMBERS_OF_ENTRIES
+    = new int[]{100, 1000, 5000, 10000, 30000, 50000, 70000, 90000, 110000};
+
+  // fill the parser with randomly generated dummy data
+  private void parserInitData(int numberOfEntries) {
+    p.data = new ArrayList<>();
+    java.util.Random random = new java.util.Random();
+    String name = NAMES[random.nextInt(NAMES.length)];
+    String uni1 = UNI_WORDS[random.nextInt(UNI_WORDS.length)];
+    String uni2 = UNI_WORDS[random.nextInt(UNI_WORDS.length)];
+    String department = DEPARTMENTS[random.nextInt(DEPARTMENTS.length)];
+    String day = DAY[random.nextInt(DAY.length)];
+    String month = MONTH[random.nextInt(MONTH.length)];
+    String year = YEAR[random.nextInt(YEAR.length)];
+    String quality = RATINGS[random.nextInt(RATINGS.length)];
+    String difficulty = RATINGS[random.nextInt(RATINGS.length)];
+
+    for (int i = 0; i < numberOfEntries; i++) {
+      p.data.add(new String[]
+        {name,
+          String.format("%s %S University", uni1, uni2),
+          department + " department",
+          String.format("%s/%s/%s", month, day, year),
+          quality, difficulty,
+          "Lorem Ipsum Most amazing instructor! She makes class fun and interesting! Cares about her students and wants nothing more than to see you succeed!", "F"});
+    }
+  }
+
+  private <T> Pair<DataAnalyzer, Long> extract(Supplier<DataAnalyzer> constructor) {
+    Instant start = Instant.now();
+    DataAnalyzer analyzer = constructor.get();
+    Instant finish = Instant.now();
+
+    long time = Duration.between(start, finish).toMillis();
+    return new Pair<>(analyzer, time);
+  }
+
+  //returns time taken
+  private long query(DataAnalyzer analyzer, String keyword) {
+    Instant start = Instant.now();
+    analyzer.getDistByKeyword(keyword);
+    Instant finish = Instant.now();
+
+    return Duration.between(start, finish).toMillis();
+  }
+
+  @Test
+  @DisplayName("Time for RatingDistributionByProf")
+  void ratingDistributionByProfTime() {
+    parserInitFields();
+    Supplier<DataAnalyzer> constructor = () -> new RatingDistributionByProf(p);
+    String keyword = "Sam";
+
+    for (int num : NUMBERS_OF_ENTRIES) {
+      parserInitData(num);
+      Pair<DataAnalyzer, Long> extracted = extract(constructor);
+      DataAnalyzer analyzer = extracted.getKey();
+      Object time = extracted.getValue();
+
+      System.out.println("The time taken to extract information for " + num + " entries is " + time + "ms");
+      System.out.println("The time taken to query a keyword for " + num + " entries is " + query(analyzer, keyword) + "ms");
+      System.out.println();
+    }
+  }
+
+  @Test
+  @DisplayName("Time for RatingDistributionBySchool")
+  void ratingDistributionBySchoolTime() {
+    parserInitFields();
+    Supplier<DataAnalyzer> constructor = () -> new RatingDistributionBySchool(p);
+    String keyword = "Wild Chicken University";
+
+    for (int num : NUMBERS_OF_ENTRIES) {
+      parserInitData(num);
+
+      Pair<DataAnalyzer, Long> extracted = extract(constructor);
+      DataAnalyzer analyzer = extracted.getKey();
+      Object time = extracted.getValue();
+
+      System.out.println("The time taken to extract information for " + num + " entries is " + time + "ms");
+      System.out.println("The time taken to query a keyword for " + num + " entries is " + query(analyzer, keyword) + "ms");
+      System.out.println();
+    }
+  }
+
+  @Test
+  @DisplayName("Time for RatingByGender")
+  void ratingByGenderTime() {
+    parserInitFields();
+    Supplier<DataAnalyzer> constructor = () -> new RatingByGender(p);
+    String keyword = "F, difficulty";
+
+    for (int num : NUMBERS_OF_ENTRIES) {
+      parserInitData(num);
+
+      Pair<DataAnalyzer, Long> extracted = extract(constructor);
+      DataAnalyzer analyzer = extracted.getKey();
+      Object time = extracted.getValue();
+
+      System.out.println("The time taken to extract information for " + num + " entries is " + time + "ms");
+      System.out.println("The time taken to query a keyword for " + num + " entries is " + query(analyzer, keyword) + "ms");
+      System.out.println();
+    }
+  }
+
+  @Test
+  @DisplayName("Time for GenderByKeyword")
+  void genderByKeywordTime() {
+    parserInitFields();
+    Supplier<DataAnalyzer> constructor = () -> new GenderByKeyword(p);
+    String keyword = "fun";
+
+    for (int num : NUMBERS_OF_ENTRIES) {
+      parserInitData(num);
+
+      Pair<DataAnalyzer, Long> extracted = extract(constructor);
+      DataAnalyzer analyzer = extracted.getKey();
+      Object time = extracted.getValue();
+
+      System.out.println("The time taken to extract information for " + num + " entries is " + time + "ms");
+      System.out.println("The time taken to query a keyword for " + num + " entries is " + query(analyzer, keyword) + "ms");
+      System.out.println();
+    }
+  }
+
+  @Test
+  @DisplayName("Time for RatingByKeyword")
+  void ratingByKeyword() {
+    parserInitFields();
+    Supplier<DataAnalyzer> constructor = () -> new RatingByKeyword(p);
+    String keyword = "fun";
+
+    for (int num : NUMBERS_OF_ENTRIES) {
+      parserInitData(num);
+
+      Pair<DataAnalyzer, Long> extracted = extract(constructor);
+      DataAnalyzer analyzer = extracted.getKey();
+      Object time = extracted.getValue();
+
+      System.out.println("The time taken to extract information for " + num + " entries is " + time + "ms");
+      System.out.println("The time taken to query a keyword for " + num + " entries is " + query(analyzer, keyword) + "ms");
+      System.out.println();
+    }
   }
 }
 

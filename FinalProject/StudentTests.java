@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Collector.*;
-import java.util.stream.Stream.*;
 import java.time.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -413,6 +411,24 @@ class HashTableTests {
     Iterator<MyPair<Integer, Integer>> i = table.iterator();
     assertTrue(i.hasNext());
     i.next();
+    assertFalse(i.hasNext());
+  }
+
+  // check hasNext() returns
+  @Test
+  @DisplayName("iterator test 3")
+  void iteratorTest3() {
+    MyHashTable<Integer, Integer> table = new MyHashTable<>();
+    table.put(1, 10);
+    table.put(17,100);
+    table.put(4, 20);
+    Iterator<MyPair<Integer, Integer>> i = table.iterator();
+    assertTrue(i.hasNext());
+    assertEquals(1, Objects.requireNonNull(i.next()).getKey());
+    assertTrue(i.hasNext());
+    assertEquals(17, Objects.requireNonNull(i.next()).getKey());
+    assertTrue(i.hasNext());
+    assertEquals(4, Objects.requireNonNull(i.next()).getKey());
     assertFalse(i.hasNext());
   }
 }

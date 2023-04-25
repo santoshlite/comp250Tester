@@ -677,6 +677,20 @@ class DataAnalyzerTests {
     assertEquals(k1, k2);
     assertEquals(v1, v2);
   }
+  
+  @Test
+	@DisplayName("RatingByKeyword Test 4")
+	void ratingByKeywordTest4() {
+		Parser parser = new Parser("/RateMyProf_Data_Gendered.csv");
+		parser.read();
+		RatingByKeyword ratingByKeyword = new RatingByKeyword(parser);
+		MyHashTable<String, Integer> dist = ratingByKeyword.getDistByKeyword("Smartest");
+		assertEquals(4, dist.get("1"));
+		assertEquals(1, dist.get("2"));
+		assertEquals(1, dist.get("3"));
+		assertEquals(3, dist.get("4"));
+		assertEquals(5, dist.get("5"));
+	}
 
   @Test
   @DisplayName("RatingByGender Test 1")

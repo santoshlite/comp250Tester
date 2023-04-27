@@ -782,18 +782,19 @@ class TimeTests {
   // fill the parser with randomly generated dummy data
   private void parserInitData(int numberOfEntries) {
     p.data = new ArrayList<>();
-    java.util.Random random = new java.util.Random();
-    String name = NAMES[random.nextInt(NAMES.length)];
-    String uni1 = UNI_WORDS[random.nextInt(UNI_WORDS.length)];
-    String uni2 = UNI_WORDS[random.nextInt(UNI_WORDS.length)];
-    String department = DEPARTMENTS[random.nextInt(DEPARTMENTS.length)];
-    String day = DAY[random.nextInt(DAY.length)];
-    String month = MONTH[random.nextInt(MONTH.length)];
-    String year = YEAR[random.nextInt(YEAR.length)];
-    String quality = RATINGS[random.nextInt(RATINGS.length)];
-    String difficulty = RATINGS[random.nextInt(RATINGS.length)];
-
+    
     for (int i = 0; i < numberOfEntries; i++) {
+      java.util.Random random = new java.util.Random();
+      String name = NAMES[random.nextInt(NAMES.length)];
+      String uni1 = UNI_WORDS[random.nextInt(UNI_WORDS.length)];
+      String uni2 = UNI_WORDS[random.nextInt(UNI_WORDS.length)];
+      String department = DEPARTMENTS[random.nextInt(DEPARTMENTS.length)];
+      String day = DAY[random.nextInt(DAY.length)];
+      String month = MONTH[random.nextInt(MONTH.length)];
+      String year = YEAR[random.nextInt(YEAR.length)];
+      String quality = RATINGS[random.nextInt(RATINGS.length)];
+      String difficulty = RATINGS[random.nextInt(RATINGS.length)];
+      
       p.data.add(new String[]
         {name,
           String.format("%s %S University", uni1, uni2),

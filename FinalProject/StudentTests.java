@@ -372,6 +372,23 @@ class HashTableTests {
     assertEquals(1, buckets2.get(17).size());
   }
 
+    //check if rehash handled keys with same hashvalues
+  @Test
+  @DisplayName("rehash test 4")
+  void rehashTest4() {
+    MyHashTableADV<Integer, String> tester = new MyHashTableADV<Integer, String>(3);
+
+    tester.put(3, "key 3");
+    tester.put(9, "key 9");
+
+    tester.rehash();
+
+    ArrayList<LinkedList<MyPair<Integer, String>>> buckets = tester.getBuckets();
+    assertEquals(2, tester.size());
+    assertEquals(6, tester.numBuckets());
+    assertEquals(2, buckets.get(3).size());
+  }
+
   // standard iteration
   @Test
   @DisplayName("iterator test 1")
@@ -711,6 +728,26 @@ class DataAnalyzerTests {
 
     assertEquals(k1, k2);
     assertEquals(v1, v2);
+  }
+  //test for invalid input strings
+  @Test
+  @DisplayName("RatingByGender Test 3")
+  void ratingByGenderTest3() {
+    p.read();
+    DataAnalyzer analyzer = new RatingByGender(p);
+    MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("M,       difficulty");
+    MyHashTable<String, Integer> output2 = analyzer.getDistByKeyword("F       , difficulty");
+    MyHashTable<String, Integer> output3 = analyzer.getDistByKeyword("F       ,       difficulty");
+    MyHashTable<String, Integer> output4 = analyzer.getDistByKeyword("M, in valid");
+    MyHashTable<String, Integer> output5 = analyzer.getDistByKeyword("x, quality");
+    MyHashTable<String, Integer> output6 = analyzer.getDistByKeyword("m, dIfFiCULTY");
+
+    assertNull(output1);
+    assertNull(output2);
+    assertNull(output3);
+    assertNull(output4);
+    assertNull(output5);
+    assertNotNull(output6);
   }
 }
 

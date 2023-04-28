@@ -503,7 +503,21 @@ class DataAnalyzerTests {
 
     assertNull(output1);
   }
-
+  
+  // normal test from original minitester
+  @Test
+  @DisplayName("RatingDistributionByProf Test 4")
+  void ratingDistributionByProfTest5() {
+        p.read();
+        RatingDistributionByProf ratingDistributionByProf = new RatingDistributionByProf(p);
+        MyHashTable<String, Integer> dist = ratingDistributionByProf.getDistByKeyword("soazig  le bihan");
+        assertEquals(1, dist.get("1"));
+        assertEquals(0, dist.get("2"));
+        assertEquals(1, dist.get("3"));
+        assertEquals(0, dist.get("4"));
+        assertEquals(2, dist.get("5"));
+  }
+  
   // normal operation, same example as pdf
   @Test
   @DisplayName("RatingCountPerProf Test 1")
@@ -580,6 +594,19 @@ class DataAnalyzerTests {
     MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("Invalid");
 
     assertNull(output1);
+  }
+  
+  // getting specific prof in school (from minitester)
+  @Test
+  @DisplayName("RatingCountPerProf Test 5")
+  void ratingCountPerProfTest5() {
+        p.read();
+        RatingDistributionBySchool ratingDistributionBySchool = new RatingDistributionBySchool(p);
+        MyHashTable<String, Integer> dist = ratingDistributionBySchool
+                .getDistByKeyword("pennsylvania college of technology");
+        String key2 = "david  burke" + "\n" + "4.33";
+
+        assertEquals(6, dist.get(key2));
   }
 
   // Correct gender output, F -> W
@@ -758,6 +785,21 @@ class DataAnalyzerTests {
     MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("InVaLIdInPut");
     assertNull(output1);
   }
+  
+  @Test
+  @DisplayName("RatingByKeyword Test 5")
+  void ratingByKeywordTest5() {
+    p.read();
+    RatingByKeyword ratingByKeyword = new RatingByKeyword(p);
+    MyHashTable<String, Integer> dist = ratingByKeyword.getDistByKeyword("terrible");
+
+    assertEquals(12, dist.get("1"));
+    assertEquals(6, dist.get("2"));
+    assertEquals(3, dist.get("3"));
+    assertEquals(0, dist.get("4"));
+    assertEquals(0, dist.get("5"));
+  }
+  
   @Test
   @DisplayName("RatingByGender Test 1")
   void ratingByGenderTest1() {
@@ -827,6 +869,20 @@ class DataAnalyzerTests {
     assertEquals(44,output1.get("3"));
     assertEquals(83,output1.get("4"));
     assertEquals(198,output1.get("5"));
+  }
+  
+  @Test
+  @DisplayName("RatingByGender Test 5")
+  void ratingByGenderTest5() {
+    p.read();
+    RatingByGender ratingByGender = new RatingByGender(p);
+    MyHashTable<String, Integer> dist = ratingByGender.getDistByKeyword("F,difficulty");
+
+    assertEquals(83, dist.get("1"));
+    assertEquals(90, dist.get("2"));
+    assertEquals(126, dist.get("3"));
+    assertEquals(73, dist.get("4"));
+    assertEquals(57, dist.get("5"));
   }
 }
 

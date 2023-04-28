@@ -1,4 +1,4 @@
-# COMP 250 Testers [+43 tests for Final Project, Timing tests are out!!]
+# COMP 250 Testers [+46 tests for Final Project, Timing tests are out!!]
 
 This is a repository for COMP 250 testers!
 

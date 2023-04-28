@@ -493,6 +493,17 @@ class DataAnalyzerTests {
     assertEquals(3, output2.get("5"));
   }
 
+  // null testing
+  @Test
+  @DisplayName("RatingDistributionByProf Test 3")
+  void ratingDistributionByProfTest4() {
+    p.read();
+    DataAnalyzer analyzer = new RatingDistributionByProf(p);
+    MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("Invalid");
+
+    assertNull(output1);
+  }
+
   // normal operation, same example as pdf
   @Test
   @DisplayName("RatingCountPerProf Test 1")
@@ -560,6 +571,17 @@ class DataAnalyzerTests {
     assertEquals(expect, k1);
   }
 
+  // null testing
+  @Test
+  @DisplayName("RatingCountPerProf Test 4")
+  void ratingCountPerProfTest4() {
+    p.read();
+    DataAnalyzer analyzer = new RatingDistributionBySchool(p);
+    MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("Invalid");
+
+    assertNull(output1);
+  }
+
   // Correct gender output, F -> W
   @Test
   @DisplayName("GenderByKeyword Test 1")
@@ -611,10 +633,20 @@ class DataAnalyzerTests {
     assertEquals(v1, v2);
   }
 
-  
+  // null testing
   @Test
   @DisplayName("GenderByKeyword Test 4")
   void genderByKeywordTest4() {
+    p.read();
+    DataAnalyzer analyzer = new GenderByKeyword(p);
+
+    MyHashTable<String, Integer> output = analyzer.getDistByKeyword("invalidInput");
+    assertNull(output);
+  }
+  
+  @Test
+  @DisplayName("GenderByKeyword Test 5")
+  void genderByKeywordTest5() {
     p.read();
     DataAnalyzer analyzer = new GenderByKeyword(p);
     MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("   KiND  ");
@@ -717,6 +749,15 @@ class DataAnalyzerTests {
     assertEquals(v1, v2);
   }
 
+  // null testing
+  @Test
+  @DisplayName("RatingByKeyword Test 4")
+  void ratingByKeywordTest4() {
+    p.read();
+    DataAnalyzer analyzer = new RatingByKeyword(p);
+    MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("InVaLIdInPut");
+    assertNull(output1);
+  }
   @Test
   @DisplayName("RatingByGender Test 1")
   void ratingByGenderTest1() {
@@ -857,7 +898,7 @@ class TimeTests {
   // fill the parser with randomly generated dummy data
   private void parserInitData(int numberOfEntries) {
     p.data = new ArrayList<>();
-    
+
     for (int i = 0; i < numberOfEntries; i++) {
       java.util.Random random = new java.util.Random();
       String name = NAMES[random.nextInt(NAMES.length)];
@@ -869,7 +910,7 @@ class TimeTests {
       String year = YEAR[random.nextInt(YEAR.length)];
       String quality = RATINGS[random.nextInt(RATINGS.length)];
       String difficulty = RATINGS[random.nextInt(RATINGS.length)];
-      
+
       p.data.add(new String[]
         {name,
           String.format("%s %S University", uni1, uni2),

@@ -376,7 +376,7 @@ class HashTableTests {
   @Test
   @DisplayName("rehash test 4")
   void rehashTest4() {
-    MyHashTableADV<Integer, String> tester = new MyHashTableADV<Integer, String>(3);
+    MyHashTable<Integer, String> tester = new MyHashTable<Integer, String>(3);
 
     tester.put(3, "key 3");
     tester.put(9, "key 9");

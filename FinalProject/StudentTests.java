@@ -639,8 +639,30 @@ class DataAnalyzerTests {
   void genderByKeywordTest4() {
     p.read();
     DataAnalyzer analyzer = new GenderByKeyword(p);
+
     MyHashTable<String, Integer> output = analyzer.getDistByKeyword("invalidInput");
     assertNull(output);
+  }
+  
+  @Test
+  @DisplayName("GenderByKeyword Test 5")
+  void genderByKeywordTest5() {
+    p.read();
+    DataAnalyzer analyzer = new GenderByKeyword(p);
+    MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("   KiND  ");
+    MyHashTable<String, Integer> output2 = analyzer.getDistByKeyword(" humor      ");
+    
+    assertEquals(15, output1.get("M"));
+
+    assertEquals(8, output1.get("F"));
+    
+    assertEquals(1, output1.get("X"));
+
+    assertEquals(3, output2.get("M"));
+
+    assertEquals(7, output2.get("F"));
+    
+    assertEquals(0, output2.get("X"));
   }
 
   @Test
@@ -770,12 +792,15 @@ class DataAnalyzerTests {
     assertEquals(k1, k2);
     assertEquals(v1, v2);
   }
+
   //test for invalid input strings
   @Test
   @DisplayName("RatingByGender Test 3")
   void ratingByGenderTest3() {
     p.read();
     DataAnalyzer analyzer = new RatingByGender(p);
+    
+    //See Ed post #1628 & #1741 for edge case clarification
     MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("M,       difficulty");
     MyHashTable<String, Integer> output2 = analyzer.getDistByKeyword("F       , difficulty");
     MyHashTable<String, Integer> output3 = analyzer.getDistByKeyword("F       ,       difficulty");
@@ -789,6 +814,19 @@ class DataAnalyzerTests {
     assertNull(output4);
     assertNull(output5);
     assertNotNull(output6);
+  }
+  
+  @Test
+  @DisplayName("RatingByGender Test 4")
+  void ratingByGenderTest4() {
+    p.read();
+    DataAnalyzer analyzer = new RatingByGender(p);
+    MyHashTable<String, Integer> output1 = analyzer.getDistByKeyword("F, quality");
+    assertEquals(62,output1.get("1"));
+    assertEquals(42,output1.get("2"));
+    assertEquals(44,output1.get("3"));
+    assertEquals(83,output1.get("4"));
+    assertEquals(198,output1.get("5"));
   }
 }
 

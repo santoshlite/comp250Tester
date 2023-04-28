@@ -1,4 +1,4 @@
-# COMP 250 Testers [+45 tests for Final Project, Timing tests are out!!]
+# COMP 250 Testers [+46 tests for Final Project, Timing tests are out!!]
 
 This is a repository for COMP 250 testers!
 
@@ -6,13 +6,11 @@ This is a repository for COMP 250 testers!
 
 If you encounter any errors while running the code, create a new Issue:[ click here to create a new issue](https://github.com/ssantoshp/Empyrial/issues/new/choose). One of the contributors will try to help you!
 
-
 ## How to contribute
 
 This section aims to simplify and guide the way beginners make their first contribution. If you are looking to make your first contribution, follow the steps below.
 
 _If you're not comfortable with command line, [here are tutorials using GUI tools.](#tutorials-using-other-tools)_
-
 
 <img align="right" width="300" src="https://firstcontributions.github.io/assets/Readme/fork.png" alt="fork this repository" />
 
@@ -80,6 +78,7 @@ Add those changes to the branch you just created using the `git add` command:
 ```
 git add Contributors.md
 ```
+
 Now commit those changes using the `git commit` command:
 
 ```
